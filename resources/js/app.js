@@ -34,6 +34,7 @@ Vue.use(VueSweetalert2);
 
 Vue.component('admin-component', require('./components/Admin.vue').default);
 Vue.component('perfiladmin-component', require('./components/PerfilAdmin.vue').default);
+Vue.component('categorie-component', require('./components/Categorie.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 /**

@@ -11,11 +11,19 @@ class PainelController extends Controller
         $this->middleware(['auth:admin', 'admin.status']);
     }
 
+    // Inicio
     public function index()
     {
         return view('painel.index');
     }
 
+    // Vendedor
+    public function categorias()
+    {
+        return view('painel.catalogos.categorias');
+    }
+
+    // Administrador
     public function perfil()
     {
         return view('painel.perfil');

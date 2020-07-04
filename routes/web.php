@@ -39,6 +39,16 @@ Route::prefix('admin')->group(function(){
     Route::get('', 'PainelController@index');
     Route::get('admins', 'PainelController@admins');
     Route::get('perfil', 'PainelController@perfil');
+    
+    Route::prefix('catalogos')->group(function(){
+        Route::get('categorias', 'PainelController@categorias');
+
+        // Categorias
+        Route::get('categorieIndex', 'CategorieController@index');
+        Route::post('categorieStore', 'CategorieController@store');
+        Route::get('categorieDestroy/{id}', 'CategorieController@destroy');
+        Route::post('categorieUpdate', 'CategorieController@update');
+    });
 
     // Admins Edits
     Route::get('adminIndex', 'AdminController@index');

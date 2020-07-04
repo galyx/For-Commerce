@@ -428,7 +428,7 @@ export default {
         this.getResults();
     },
     methods: {
-        // Busca paginada
+        // Retorno paginado
         getResults(page) {
             if (typeof page === "undefined") {
                 page = 1;
@@ -648,6 +648,7 @@ export default {
         }
     },
     filters: {
+        // Filtro por autorização
         authorization(e) {
             if (e == 0) {
                 return "Inativo";

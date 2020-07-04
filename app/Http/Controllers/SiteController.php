@@ -8,6 +8,6 @@ class SiteController extends Controller
 {
     public function index()
     {
-        # code...
+        return view('site.index');
     }
 }

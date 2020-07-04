@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'E-Commerce',
+    'title' => 'Dev-Commerce',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => 'E-Commerce',
+    'logo' => 'Dev-Commerce',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'E-Commerce',
+    'logo_img_alt' => 'Dev-Commerce',
 
     /*
     |--------------------------------------------------------------------------

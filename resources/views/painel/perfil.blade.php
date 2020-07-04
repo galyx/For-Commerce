@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Painel E-Commerce')
+@section('title', 'Painel Dev-Commerce')
 
 @section('content_header')
     <h1>Editor de Perfil</h1>
