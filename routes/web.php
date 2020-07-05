@@ -44,7 +44,7 @@ Route::prefix('admin')->group(function(){
         Route::get('categorias', 'PainelController@categorias');
 
         // Categorias
-        Route::get('categorieIndex', 'CategorieController@index');
+        Route::get('categorieIndex/{slug?}', 'CategorieController@index');
         Route::post('categorieStore', 'CategorieController@store');
         Route::get('categorieDestroy/{id}', 'CategorieController@destroy');
         Route::post('categorieUpdate', 'CategorieController@update');

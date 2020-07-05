@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row justify-content-between">
-                    <div class="col-12">
+                    <div v-if="!categorie" class="col-6">
                         <button
                             type="button"
                             class="btn btn-primary"
@@ -20,6 +20,18 @@
                             v-if="trashAll.length >= 1"
                         >
                             <i class="fa fa-trash"></i> Apagar Selecionados
+                        </button>
+                    </div>
+                    <div v-if="categorie" class="col-6">
+                        <h3>{{ categorie.name | uppercase }}</h3>
+                    </div>
+                    <div v-if="categorie" class="col-6">
+                        <button
+                            type="button"
+                            class="btn btn-info"
+                            v-on:click="returnCategorie(categorie)"
+                        >
+                            <i class="fa fa-arrow-left"></i> Voltar
                         </button>
                     </div>
                 </div>
@@ -69,24 +81,28 @@
                                         <button
                                             type="button"
                                             class="btn btn-primary"
-                                            data-tooltip="tooltip"
-                                            data-placement="top"
-                                            title="Adicionar categorias"
                                             v-on:click="
                                                 addSubCategorie(outputCategorie)
                                             "
                                         >
                                             <i class="fa fa-ad"></i>
+                                            Nova Sub Categoria
                                         </button>
                                         <button
                                             type="button"
                                             class="btn btn-secondary"
-                                            data-tooltip="tooltip"
-                                            data-placement="top"
-                                            title="Visualizar categorias"
-                                            
+                                            v-on:click="
+                                                getResultCategories(
+                                                    outputCategorie
+                                                )
+                                            "
                                         >
                                             <i class="fa fa-eye"></i>
+                                            {{
+                                                outputCategorie
+                                                    .children_categories.length
+                                            }}
+                                            Sub Categorias
                                         </button>
                                     </div>
                                 </td>
@@ -140,7 +156,8 @@ export default {
         return {
             trashAll: [],
             trash: false,
-            outputCategories: {}
+            outputCategories: {},
+            categorie: {}
         };
     },
     created() {
@@ -160,17 +177,43 @@ export default {
                 );
             }
         },
-        getResultCategories() {
-            axios
-                .get("categorieIndex")
+        getResultCategories(outputCategorie = null) {
+            this.categorie = outputCategorie !== null ? outputCategorie : "";
+            const categorie_id =
+                outputCategorie !== null
+                    ? "categorieIndex/" + outputCategorie.id
+                    : "categorieIndex";
 
-                .then(data => {
-                    this.outputCategories = data.data;
+            axios
+                .get(categorie_id)
+
+                .then(response => {
+                    this.outputCategories = response.data.categories;
 
                     $(function() {
                         $('[data-tooltip="tooltip"]').tooltip();
                     });
                 });
+        },
+        returnCategorie(categorie = null) {
+            if (categorie !== null) {
+                axios
+                    .get("categorieIndex/" + categorie.categorie_id)
+
+                    .then(response => {
+                        if (categorie.categorie_id !== null) {
+                            this.outputCategories = response.data.categories;
+                            this.categorie = response.data.categorie[0];
+                        } else {
+                            this.categorie = "";
+                            this.getResultCategories();
+                        }
+
+                        $(function() {
+                            $('[data-tooltip="tooltip"]').tooltip();
+                        });
+                    });
+            }
         },
         // Adicionando nova categorie
         addCategorie() {
@@ -370,6 +413,11 @@ export default {
             });
         }
     },
-    filters: {}
+    filters: {
+        uppercase: function(value) {
+            if (!value) return "";
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        }
+    }
 };
 </script>

@@ -2705,13 +2705,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
     return {
       trashAll: [],
       trash: false,
-      outputCategories: {}
+      outputCategories: {},
+      categorie: {}
     };
   },
   created: function created() {
@@ -2737,16 +2754,41 @@ __webpack_require__.r(__webpack_exports__);
     getResultCategories: function getResultCategories() {
       var _this = this;
 
-      axios.get("categorieIndex").then(function (data) {
-        _this.outputCategories = data.data;
+      var outputCategorie = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      this.categorie = outputCategorie !== null ? outputCategorie : "";
+      var categorie_id = outputCategorie !== null ? "categorieIndex/" + outputCategorie.id : "categorieIndex";
+      axios.get(categorie_id).then(function (response) {
+        _this.outputCategories = response.data.categories;
         $(function () {
           $('[data-tooltip="tooltip"]').tooltip();
         });
       });
     },
+    returnCategorie: function returnCategorie() {
+      var _this2 = this;
+
+      var categorie = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+      if (categorie !== null) {
+        axios.get("categorieIndex/" + categorie.categorie_id).then(function (response) {
+          if (categorie.categorie_id !== null) {
+            _this2.outputCategories = response.data.categories;
+            _this2.categorie = response.data.categorie[0];
+          } else {
+            _this2.categorie = "";
+
+            _this2.getResultCategories();
+          }
+
+          $(function () {
+            $('[data-tooltip="tooltip"]').tooltip();
+          });
+        });
+      }
+    },
     // Adicionando nova categorie
     addCategorie: function addCategorie() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$swal({
         title: "Nome da Categoria",
@@ -2763,17 +2805,17 @@ __webpack_require__.r(__webpack_exports__);
               return response.data.status;
             });
           } else {
-            _this2.$swal.showValidationMessage("Campo categoria não pode estar vazio");
+            _this3.$swal.showValidationMessage("Campo categoria não pode estar vazio");
           }
         },
         allowOutsideClick: function allowOutsideClick() {
-          return !_this2.$swal.isLoading();
+          return !_this3.$swal.isLoading();
         }
       }).then(function (result) {
         if (result.value == 200) {
-          _this2.getResultCategories();
+          _this3.getResultCategories();
 
-          _this2.$swal({
+          _this3.$swal({
             title: "Categoria registrada com successo",
             icon: "success",
             showConfirmButton: false,
@@ -2782,7 +2824,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (result.value == 201) {
-          _this2.$swal({
+          _this3.$swal({
             title: "Maximo 8 Categorias podem estar registradas como principais.",
             icon: "error",
             showConfirmButton: true
@@ -2792,7 +2834,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Editando nome da Categoria
     categorieEdit: function categorieEdit(outputCategorie) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$swal({
         title: "Nome da Categoria",
@@ -2811,17 +2853,17 @@ __webpack_require__.r(__webpack_exports__);
               return response;
             });
           } else {
-            _this3.$swal.showValidationMessage("Campo categoria não pode estar vazio");
+            _this4.$swal.showValidationMessage("Campo categoria não pode estar vazio");
           }
         },
         allowOutsideClick: function allowOutsideClick() {
-          return !_this3.$swal.isLoading();
+          return !_this4.$swal.isLoading();
         }
       }).then(function (result) {
         if (result.value) {
-          _this3.getResultCategories();
+          _this4.getResultCategories();
 
-          _this3.$swal({
+          _this4.$swal({
             title: "Categoria alterada com sucesso!",
             icon: "success",
             showConfirmButton: false,
@@ -2832,7 +2874,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Deletando Categorias
     destroyCategorie: function destroyCategorie(outputCategorie) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$swal({
         title: "Você tem Certeza?",
@@ -2844,9 +2886,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           axios.get("categorieDestroy/" + outputCategorie.id).then(function (response) {
-            _this4.getResultCategories();
+            _this5.getResultCategories();
 
-            _this4.$swal({
+            _this5.$swal({
               title: "Deletado!",
               html: "<strong>" + outputCategorie.name + "</strong> Deletado com sucesso.",
               icon: "success"
@@ -2857,7 +2899,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Apagando categorias em massa
     trashCategorie: function trashCategorie() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$swal({
         title: "Você tem Certeza?",
@@ -2868,15 +2910,15 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: "Não, Mantê-la"
       }).then(function (result) {
         if (result.value) {
-          axios.get("categorieDestroy/" + _this5.trashAll).then(function (response) {
-            _this5.trashAll = [];
-            _this5.trash = false;
+          axios.get("categorieDestroy/" + _this6.trashAll).then(function (response) {
+            _this6.trashAll = [];
+            _this6.trash = false;
 
-            _this5.getResultCategories();
+            _this6.getResultCategories();
 
-            _this5.$swal({
+            _this6.$swal({
               title: "Deletado!",
-              html: _this5.trashAll.lenght + " Categorias apagados com sucesso.",
+              html: _this6.trashAll.lenght + " Categorias apagados com sucesso.",
               icon: "success"
             });
           });
@@ -2885,7 +2927,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Sub Categorias
     addSubCategorie: function addSubCategorie(outputCategorie) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$swal({
         title: "Nome da Categoria",
@@ -2903,17 +2945,17 @@ __webpack_require__.r(__webpack_exports__);
               return response.data.status;
             });
           } else {
-            _this6.$swal.showValidationMessage("Campo categoria não pode estar vazio");
+            _this7.$swal.showValidationMessage("Campo categoria não pode estar vazio");
           }
         },
         allowOutsideClick: function allowOutsideClick() {
-          return !_this6.$swal.isLoading();
+          return !_this7.$swal.isLoading();
         }
       }).then(function (result) {
         if (result.value == 200) {
-          _this6.getResultCategories();
+          _this7.getResultCategories();
 
-          _this6.$swal({
+          _this7.$swal({
             title: "Categoria registrada com successo",
             icon: "success",
             showConfirmButton: false,
@@ -2922,7 +2964,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (result.value == 201) {
-          _this6.$swal({
+          _this7.$swal({
             title: "Maximo 15 Categorias podem estar registradas na principal.",
             icon: "error",
             showConfirmButton: true
@@ -2931,7 +2973,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  filters: {}
+  filters: {
+    uppercase: function uppercase(value) {
+      if (!value) return "";
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+  }
 });
 
 /***/ }),
@@ -64544,35 +64591,66 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "row justify-content-between" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: { click: _vm.addCategorie }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(" Nova Categoria Principal\n                    ")
-              ]
-            ),
-            _vm._v(" "),
-            _vm.trashAll.length >= 1
-              ? _c(
+          !_vm.categorie
+            ? _c("div", { staticClass: "col-6" }, [
+                _c(
                   "button",
                   {
-                    staticClass: "btn btn-danger",
+                    staticClass: "btn btn-primary",
                     attrs: { type: "button" },
-                    on: { click: _vm.trashCategorie }
+                    on: { click: _vm.addCategorie }
                   },
                   [
-                    _c("i", { staticClass: "fa fa-trash" }),
-                    _vm._v(" Apagar Selecionados\n                    ")
+                    _c("i", { staticClass: "fa fa-plus" }),
+                    _vm._v(" Nova Categoria Principal\n                    ")
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.trashAll.length >= 1
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button" },
+                        on: { click: _vm.trashCategorie }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-trash" }),
+                        _vm._v(" Apagar Selecionados\n                    ")
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.categorie
+            ? _c("div", { staticClass: "col-6" }, [
+                _c("h3", [
+                  _vm._v(_vm._s(_vm._f("uppercase")(_vm.categorie.name)))
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.categorie
+            ? _c("div", { staticClass: "col-6" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.returnCategorie(_vm.categorie)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-arrow-left" }),
+                    _vm._v(" Voltar\n                    ")
                   ]
                 )
-              : _vm._e()
-          ])
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
@@ -64705,22 +64783,45 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-primary",
-                              attrs: {
-                                type: "button",
-                                "data-tooltip": "tooltip",
-                                "data-placement": "top",
-                                title: "Adicionar categorias"
-                              },
+                              attrs: { type: "button" },
                               on: {
                                 click: function($event) {
                                   return _vm.addSubCategorie(outputCategorie)
                                 }
                               }
                             },
-                            [_c("i", { staticClass: "fa fa-ad" })]
+                            [
+                              _c("i", { staticClass: "fa fa-ad" }),
+                              _vm._v(
+                                "\n                                        Nova Sub Categoria\n                                    "
+                              )
+                            ]
                           ),
                           _vm._v(" "),
-                          _vm._m(0, true)
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-secondary",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.getResultCategories(
+                                    outputCategorie
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-eye" }),
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(
+                                    outputCategorie.children_categories.length
+                                  ) +
+                                  "\n                                        Sub Categorias\n                                    "
+                              )
+                            ]
+                          )
                         ]
                       )
                     ]),
@@ -64787,26 +64888,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary",
-        attrs: {
-          type: "button",
-          "data-tooltip": "tooltip",
-          "data-placement": "top",
-          title: "Visualizar categorias"
-        }
-      },
-      [_c("i", { staticClass: "fa fa-eye" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -7,10 +7,14 @@ use App\Categorie;
 
 class CategorieController extends Controller
 {
-    public function index()
+    public function index($categorie_id = null)
     {
-
-        return response()->json(Categorie::whereNull('categorie_id')->with('childrenCategories')->get());
+        if($categorie_id){
+            return response()->json(['categories' => Categorie::where('categorie_id', $categorie_id)->with('childrenCategories')->get(), 'categorie' => Categorie::where('id', $categorie_id)->with('childrenCategories')->get()]);
+        }else{
+            return response()->json(['categories' => Categorie::whereNull('categorie_id')->with('childrenCategories')->get()]);
+            // return response()->json(Categorie::whereNull('categorie_id')->with('childrenCategories')->get());
+        }
     }
 
     public function store(Request $request)
