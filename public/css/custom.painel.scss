@@ -1,0 +1,28 @@
+.max-height-image {
+  max-height: 150vh;
+  overflow-x: hidden;
+}
+
+.card-image {
+  width: 180px;
+  height: 220px;
+  border-radius: .2em;
+  margin-bottom: 1em;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  clear: both;
+}
+
+.card-body-image {
+  width: 100%;
+  height: 100%;
+}
+
+.card-body-image img {
+  max-width: 100%;
+  max-height: 100%;
+  transform: translateY(-50%);
+  top: 50%;
+  position: relative;
+}

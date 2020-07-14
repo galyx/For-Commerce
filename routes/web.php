@@ -39,7 +39,14 @@ Route::prefix('admin')->group(function(){
     Route::get('', 'PainelController@index');
     Route::get('admins', 'PainelController@admins');
     Route::get('perfil', 'PainelController@perfil');
+    Route::get('imagens', 'PainelController@imagens');
+
+    // Imagens
+    Route::get('imageIndex', 'ImagensController@index');
+    Route::post('imageStore', 'ImagensController@store');
+    // Route::get('imageDestroy', 'ImagensController@destoy');
     
+    // Catalogos
     Route::prefix('catalogos')->group(function(){
         Route::get('categorias', 'PainelController@categorias');
 

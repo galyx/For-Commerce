@@ -120,10 +120,10 @@ class AdminController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
 
-                return response()->json(['status' => 200]);
+                return response()->json(['status' => 200],200);
             }
 
-            return response()->json($current_password);
+            return response()->json(['status' => 500],200);
         }
     }
 

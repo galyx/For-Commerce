@@ -33,4 +33,9 @@ class PainelController extends Controller
     {
         return view('painel.admins');
     }
+
+    public function imagens()
+    {
+        return view('painel.imagens');
+    }
 }

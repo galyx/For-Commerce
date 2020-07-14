@@ -255,7 +255,7 @@ export default {
                 if (result.value == 201) {
                     this.$swal({
                         title:
-                            "Maximo 8 Categorias podem estar registradas como principais.",
+                            "Maximo 10 Categorias podem estar registradas como principais.",
                         icon: "error",
                         showConfirmButton: true
                     });
@@ -392,7 +392,14 @@ export default {
                 allowOutsideClick: () => !this.$swal.isLoading()
             }).then(result => {
                 if (result.value == 200) {
-                    this.getResultCategories();
+                    const categorie_id =
+                        this.categorie !== ""
+                            ? "categorieIndex/" + this.categorie.id
+                            : "categorieIndex";
+
+                    axios.get(categorie_id).then(response => {
+                        this.outputCategories = response.data.categories;
+                    });
 
                     this.$swal({
                         title: "Categoria registrada com successo",

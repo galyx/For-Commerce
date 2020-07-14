@@ -77,6 +77,15 @@ class AppServiceProvider extends ServiceProvider
                     ],
                 );
             }
+            if($authVerify == 10){
+                $event->menu->add(
+                    [
+                        'text' => 'Imagens',
+                        'url'  => 'admin/imagens',
+                        'icon' => 'fas fa-fw fa-images',
+                    ],
+                );
+            }
             if($authVerify == 2 || $authVerify == 4 ||$authVerify == 6 || $authVerify == 10){
                 $event->menu->add(
                     ['header' => 'Contas'],

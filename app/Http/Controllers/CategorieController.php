@@ -20,7 +20,7 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         if($request->categorie_id){
-            if(Categorie::where('categorie_id', $request->categorie_id)->get()->count() < 15){
+            if(Categorie::where('categorie_id', $request->categorie_id)->get()->count() < 10){
                 Categorie::create(['name' => $request->categorie, 'categorie_id' => $request->categorie_id]);
     
                 return response()->json(['status' => 200]);
@@ -28,7 +28,7 @@ class CategorieController extends Controller
                 return response()->json(['status' => 201]);
             }
         }else{
-            if(Categorie::whereNull('categorie_id')->get()->count() < 8){
+            if(Categorie::whereNull('categorie_id')->get()->count() < 10){
                 Categorie::create(['name' => $request->categorie]);
     
                 return response()->json(['status' => 200]);

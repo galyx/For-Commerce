@@ -178,20 +178,20 @@ export default {
                                 password_confirmation: result.value[2]
                             })
                             .then(response => {
-                                if (response.data == false) {
-                                    this.$swal({
-                                        title: "Senha Antiga invalida!",
-                                        icon: "error",
-                                        showConfirmButton: true
-                                    });
-                                }
-
-                                if (response.status == 200) {
+                                if (response.data.status == 200) {
                                     this.getAuth();
 
                                     this.$swal({
                                         title: "Senha Alterada com sucesso!",
                                         icon: "success",
+                                        showConfirmButton: true
+                                    });
+                                }
+
+                                if (response.data.status == 500) {
+                                    this.$swal({
+                                        title: "Senha Antiga invalida!",
+                                        icon: "error",
                                         showConfirmButton: true
                                     });
                                 }
