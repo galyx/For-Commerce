@@ -13,20 +13,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/', 'SiteController@index');
-Route::get('/minhaconta', 'SiteController@minhaconta');
-Route::get('/contato', 'SiteController@contato');
-Route::get('/carrinho', 'SiteController@carrinho');
-Route::get('/sobrenos', 'SiteController@sobrenos');
+Route::get('produto/{slug}', 'SiteController@produto');
+Route::get('categoria/{slug}', 'SiteController@categoria');
 
-// Route::post('/pesquisa', 'SiteController@pesquisa')->name('pesquisa');
+// Consulta Endereço
+Route::post('cep/{cep?}', 'SiteController@cepConsulta');
 
-// Route::get('/categoria/{slug}', 'SiteController@categoria');
-// Route::get('/categoria/produto/{slug}', 'SiteController@categoriaProduto');
-// Route::get('/produto/{slug}', 'SiteController@produtoD');
-// Route::get('/produtos-todos', 'SiteController@produtoall');
+// Perfil
+Route::prefix('perfil')->middleware(['auth', 'verified'])->group(function(){
+    Route::get('/', 'SiteController@perfil');
+
+    // Dsdos do Perfil
+    Route::get('showPerfil', 'PerfilController@showPerfil');
+    Route::post('editPerfil', 'PerfilController@editPerfil');
+
+    // Senha do Perfil
+    Route::get('showPerfilReset', 'PerfilController@showPerfilReset');
+    Route::post('editPerfilReset', 'PerfilController@editPerfilReset');
+
+    // Dados de Endereço
+    Route::get('showAddress/{id?}', 'PerfilController@showAddress');
+    Route::post('editAddress/{id}', 'PerfilController@editAddress');
+    Route::post('createAddress', 'PerfilController@createAddress');
+    Route::get('destroyAddress/{id}', 'PerfilController@destroyAddress');
+});
+
+// Pages
+Route::get('sobre/{page}', 'SiteController@sobre');
+Route::get('contato/{page}', 'SiteController@contato');
+
+// Funções
+Route::post('faleConosco', 'SiteController@faleConosco');
 
 Route::prefix('admin')->group(function(){
     // Rotas de login para o administrador

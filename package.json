@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "jquery-mask-plugin": "^1.14.16",
         "laravel-echo": "^1.8.0",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.27.0",
