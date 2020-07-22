@@ -29,7 +29,7 @@ class CategorieController extends Controller
             }
         }else{
             if(Categorie::whereNull('categorie_id')->get()->count() < 10){
-                Categorie::create(['name' => $request->categorie]);
+                Categorie::create(['name' => mb_convert_case($request->categorie, MB_CASE_UPPER)]);
     
                 return response()->json(['status' => 200]);
             }else{
@@ -42,7 +42,7 @@ class CategorieController extends Controller
     {
         $categorie = Categorie::find($request->id);
 
-        $categorie->update(['name' => $request->categorie]);
+        $categorie->update(['name' => mb_convert_case($request->categorie, MB_CASE_UPPER)]);
 
         return response()->json(['status' => 200]);
     }

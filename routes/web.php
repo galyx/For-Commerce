@@ -64,7 +64,7 @@ Route::prefix('admin')->group(function(){
     // Imagens
     Route::get('imageIndex', 'ImagensController@index');
     Route::post('imageStore', 'ImagensController@store');
-    // Route::get('imageDestroy', 'ImagensController@destoy');
+    Route::get('imageDestroy/{id}', 'ImagensController@destroy');
     
     // Catalogos
     Route::prefix('catalogos')->group(function(){

@@ -3084,6 +3084,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -3108,9 +3128,39 @@ __webpack_require__.r(__webpack_exports__);
         _this.images = result.data;
       });
     },
+    imageDestroy: function imageDestroy(image) {
+      var _this2 = this;
+
+      this.$swal({
+        title: "Você tem Certeza?",
+        html: "Você irá deletar a imagem <strong>" + image.image_name + "</strong> permanentemente!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, Delete isso!",
+        cancelButtonText: "Não, Mantê-la"
+      }).then(function (result) {
+        if (result.value) {
+          axios.get('imageDestroy/' + image.id).then(function (response) {
+            _this2.getImages();
+
+            console.log(response);
+
+            _this2.$swal({
+              title: "Deletado!",
+              html: "<strong>" + image.image_name + "</strong> Deletado com sucesso.",
+              icon: "success"
+            });
+          });
+        }
+      });
+    },
     uploadFiles: function uploadFiles() {
+      var _this3 = this;
+
       // Using the default uploader. You may use another uploader instead.
-      this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForUpload);
+      this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForUpload).then(function (result) {
+        _this3.getImages();
+      });
       this.fileRecordsForUpload = [];
     },
     filesSelected: function filesSelected(fileRecordsNewlySelected) {
@@ -72553,11 +72603,51 @@ var render = function() {
           _vm._l(_vm.images, function(image) {
             return _c(
               "div",
-              { key: image, staticClass: "col-auto text-center" },
+              { key: image.id, staticClass: "col-auto text-center" },
               [
                 _c("div", { staticClass: "card-image" }, [
+                  _c("div", { staticClass: "card-tiulo-image" }, [
+                    _c("div", { staticClass: "card-titulo" }, [
+                      _c(
+                        "a",
+                        { attrs: { target: "_blank", href: image.path } },
+                        [_c("i", { staticClass: "fa fa-eye" })]
+                      ),
+                      _vm._v(" "),
+                      _c("span", [_vm._v(_vm._s(image.image_name))]),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.imageDestroy(image)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-trash" })]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "card-body-image" }, [
                     _c("img", { attrs: { src: image.path, alt: "Imagem" } })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer-image" }, [
+                    _c("div", { staticClass: "card-titulo" }, [
+                      _c("span", [_vm._v(_vm._s(image.extension))]),
+                      _vm._v(" "),
+                      _c("span", [_vm._v(_vm._s(image.size))]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(image.wxh[0]) + " x " + _vm._s(image.wxh[1])
+                        )
+                      ])
+                    ])
                   ])
                 ])
               ]

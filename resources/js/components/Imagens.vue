@@ -17,11 +17,29 @@
             </div>
             <div class="card-body max-height-image">
                 <div class="row justify-content-center">
-                    <div class="col-auto text-center" v-for="image in images" :key="image">
+                    <div
+                        class="col-auto text-center"
+                        v-for="image in images"
+                        :key="image.id"
+                    >
                         <div class="card-image">
-                            <!-- <div class="card-tiulo-image">fff</div> -->
-                            <div class="card-body-image"><img :src="image.path" alt="Imagem" /></div>
-                            <!-- <div class="card-footer-image">qqq</div> -->
+                            <div class="card-tiulo-image">
+                                <div class="card-titulo">
+                                    <a target="_blank" :href="image.path"><i class="fa fa-eye"></i></a>
+                                    <span>{{image.image_name}}</span>
+                                    <a class="text-danger" v-on:click="imageDestroy(image)" href="#"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body-image">
+                                <img :src="image.path" alt="Imagem" />
+                            </div>
+                            <div class="card-footer-image">
+                                <div class="card-titulo">
+                                    <span>{{image.extension}}</span>
+                                    <span>{{image.size}}</span>
+                                    <span>{{image.wxh[0]}} x {{image.wxh[1]}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +61,7 @@
                         <h5 class="modal-title" id="modalImagensLabel">
                             Arraste e Solte a Imagem
                         </h5>
-                        
+
                         <button
                             type="button"
                             class="close"
@@ -54,7 +72,9 @@
                         </button>
                     </div>
                     <div class="modal-body view-files-upload">
-                        <button type="button" class="btn btn-success mb-3"
+                        <button
+                            type="button"
+                            class="btn btn-success mb-3"
                             :disabled="!fileRecordsForUpload.length"
                             @click="uploadFiles()"
                         >
@@ -107,18 +127,50 @@ export default {
         this.getImages();
     },
     methods: {
-        getImages(){
-            axios.get("imageIndex").then((result) => {
+        getImages() {
+            axios.get("imageIndex").then(result => {
                 this.images = result.data;
+            });
+        },
+        imageDestroy(image) {
+            this.$swal({
+                title: "Você tem Certeza?",
+                html:
+                    "Você irá deletar a imagem <strong>" +
+                    image.image_name +
+                    "</strong> permanentemente!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sim, Delete isso!",
+                cancelButtonText: "Não, Mantê-la"
+            }).then(result => {
+                if (result.value) {
+                    axios.get('imageDestroy/'+image.id).then(response => {
+                       this.getImages();
+                       console.log(response);
+                        this.$swal({
+                            title: "Deletado!",
+                            html:
+                                "<strong>" +
+                                image.image_name +
+                                "</strong> Deletado com sucesso.",
+                            icon: "success"
+                        });
+                    });
+                }
             });
         },
         uploadFiles: function() {
             // Using the default uploader. You may use another uploader instead.
-            this.$refs.vueFileAgent.upload(
-                this.uploadUrl,
-                this.uploadHeaders,
-                this.fileRecordsForUpload
-            );
+            this.$refs.vueFileAgent
+                .upload(
+                    this.uploadUrl,
+                    this.uploadHeaders,
+                    this.fileRecordsForUpload
+                )
+                .then(result => {
+                    this.getImages();
+                });
             this.fileRecordsForUpload = [];
         },
         filesSelected: function(fileRecordsNewlySelected) {
