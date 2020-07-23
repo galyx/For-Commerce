@@ -231,6 +231,7 @@ return [
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Cep' => Canducci\Cep\Facades\Cep::class,
         'Endereco' => Canducci\Cep\Facades\Endereco::class,
+        'HelperClass' => App\Helpers\HelperClass::class,
     ],
 
 ];

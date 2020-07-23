@@ -117,6 +117,15 @@ $(function() {
     });
 });
 
+$(function() {
+    $("#lateral-main-menu").smartmenus({
+        mainMenuSubOffsetX: 1,
+        mainMenuSubOffsetY: -8,
+        subMenusSubOffsetX: 1,
+        subMenusSubOffsetY: -8
+    });
+});
+
 $(".cpf").mask("000.000.000-00");
 $(".fone").mask("(00) 0000-0000");
 $(".cel").mask("(00) 00000-0000");

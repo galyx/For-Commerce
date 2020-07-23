@@ -15,8 +15,8 @@ class Categorie extends Model
     ];
 
     /**
-     * Get the options for generating the slug.
-     */
+    * Get the options for generating the slug.
+    */
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()

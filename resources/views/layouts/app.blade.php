@@ -84,71 +84,19 @@
                                 <a class="nav-link {{ request()->is('/') ? 'active-menu' : '' }}" href="{{url('/')}}">HOME</a>
                             </li>
 
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">PRODUTOS</a>
+                            @foreach (HelperClass::categories() as $categorie)
+                                <li>
+                                    <a class="nav-link {{ request()->is('categoria/'.$categorie->slug) ? 'active-menu' : '' }}" href="{{url('categoria/'.$categorie->slug)}}">{{$categorie->name}}</a>
 
-                                {{-- Submenus --}}
-                                <ul>
-                                    <li>
-                                        <a class="nav-link" href="#">Teste</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="#">Produto chefe diferenciado</a>
-
-                                        {{-- Submenu Seguinte --}}
+                                    @if ($categorie->childrenCategories->count() >= 1)
                                         <ul>
-                                            <li>
-                                                <a class="nav-link" href="#">Teste</a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link" href="#">Produto chefe diferenciado</a>
-                                            </li>
+                                            @foreach ($categorie->childrenCategories as $childCategorie)
+                                                @include('helpers.helper_child_categorie', ['child_categorie' => $childCategorie])
+                                            @endforeach
                                         </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">ITAGRILL</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">ITAPREMIUM</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">ITASTELL</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">ITAFORNO</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">BLOG</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">CONTATO</a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{url('categoria/categoria')}}">CONSTRUTORA</a>
-
-                                 {{-- Submenus --}}
-                                 <ul>
-                                    <li>
-                                        <a class="nav-link" href="#">Teste</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="#">Produto chefe diferenciado</a>
-
-                                        {{-- Submenu Seguinte --}}
-                                        <ul>
-                                            <li>
-                                                <a class="nav-link" href="#">Teste</a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link" href="#">Produto chefe diferenciado</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                    @endif
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -163,50 +111,20 @@
                                     <li>
                                         <a class="nav-link {{ request()->is('/') ? 'active-menu' : '' }}" href="{{url('/')}}">HOME</a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">PRODUTOS</a>
 
-                                        {{-- Submenus --}}
-                                        <ul>
-                                            <li>
-                                                <a class="nav-link" href="#">Teste</a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link" href="#">Produto chefe diferenciado</a>
+                                    @foreach (HelperClass::categories() as $categorie)
+                                        <li>
+                                            <a class="nav-link {{ request()->is('categoria/'.$categorie->slug) ? 'active-menu' : '' }}" href="{{url('categoria/'.$categorie->slug)}}">{{$categorie->name}}</a>
 
-                                                {{-- Submenus --}}
+                                            @if ($categorie->childrenCategories->count() >= 1)
                                                 <ul>
-                                                    <li>
-                                                        <a class="nav-link" href="#">Teste</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="#">Produto chefe diferenciado</a>
-                                                    </li>
+                                                    @foreach ($categorie->childrenCategories as $childCategorie)
+                                                        @include('helpers.helper_child_categorie', ['child_categorie' => $childCategorie])
+                                                    @endforeach
                                                 </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">ITAGRILL</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">ITAPREMIUM</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">ITASTELL</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">ITAFORNO</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">BLOG</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">CONTATO</a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="{{url('categoria/categoria')}}">CONSTRUTORA</a>
-                                    </li>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

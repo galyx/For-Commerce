@@ -9,6 +9,8 @@ use App\Mails;
 use App\Address;
 use Canducci\Cep\Cep;
 
+use HelperClass;
+
 class SiteController extends Controller
 {
     // Home
@@ -26,7 +28,9 @@ class SiteController extends Controller
     // Categorias
     public function categoria($slug)
     {
-        return view('site.categoria');
+        $categorie_show = HelperClass::categorie(['slug' => $slug]);
+
+        return view('site.categoria', compact('categorie_show'));
     }
 
     // Pages

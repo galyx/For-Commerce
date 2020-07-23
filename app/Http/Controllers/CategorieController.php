@@ -21,7 +21,7 @@ class CategorieController extends Controller
     {
         if($request->categorie_id){
             if(Categorie::where('categorie_id', $request->categorie_id)->get()->count() < 10){
-                Categorie::create(['name' => $request->categorie, 'categorie_id' => $request->categorie_id]);
+                Categorie::create(['name' => mb_convert_case($request->categorie, MB_CASE_TITLE), 'categorie_id' => $request->categorie_id]);
     
                 return response()->json(['status' => 200]);
             }else{
