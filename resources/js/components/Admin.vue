@@ -9,7 +9,7 @@
                         data-toggle="modal"
                         data-target="#modalAdmins"
                     >
-                        <i class="fa fa-plus"></i> Adicionar Administrador
+                        <i class="fa fa-plus"></i> Novo Administrador
                     </button>
                 </div>
 
@@ -121,7 +121,7 @@
                     <form @submit="addAdmin" method="post">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalAdminsLabel">
-                                Adicionar Administrador
+                                Novo Administrador
                             </h5>
                             <button
                                 type="button"
@@ -253,7 +253,7 @@
                                 class="btn btn-primary"
                                 :disabled="disabled == 1"
                             >
-                                <span class="fa fa-user-plus"></span> Registrar
+                                <span class="fa fa-save"></span> Registrar
                                 Admin
                             </button>
                         </div>
@@ -386,7 +386,7 @@
                                 class="btn btn-primary"
                                 :disabled="disabled == 1"
                             >
-                                <span class="fa fa-user-edit"></span> Salvar
+                                <span class="fa fa-save"></span> Salvar
                                 Alterações
                             </button>
                         </div>

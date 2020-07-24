@@ -42,6 +42,8 @@ Vue.component('perfiladmin-component', require('./components/PerfilAdmin.vue').d
 Vue.component('categorie-component', require('./components/Categorie.vue').default);
 // Imagens
 Vue.component('imagens-component', require('./components/Imagens.vue').default);
+// Produtos
+Vue.component('produtos-component', require('./components/Product.vue').default);
 
 // Paginação
 Vue.component('pagination', require('laravel-vue-pagination'));

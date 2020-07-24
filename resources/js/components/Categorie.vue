@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row justify-content-between">
-                    <div v-if="!categorie" class="col-6">
+                    <div v-if="!categorie" class="col-4">
                         <button
                             type="button"
                             class="btn btn-primary"
@@ -12,7 +12,11 @@
                         >
                             <i class="fa fa-plus"></i> Nova Categoria Principal
                         </button>
-
+                    </div>
+                    <div v-if="categorie" class="col-4">
+                        <h3>{{ categorie.name | uppercase }}</h3>
+                    </div>
+                    <div class="col-4">
                         <button
                             type="button"
                             class="btn btn-danger"
@@ -22,10 +26,7 @@
                             <i class="fa fa-trash"></i> Apagar Selecionados
                         </button>
                     </div>
-                    <div v-if="categorie" class="col-6">
-                        <h3>{{ categorie.name | uppercase }}</h3>
-                    </div>
-                    <div v-if="categorie" class="col-6">
+                    <div v-if="categorie" class="col-4">
                         <button
                             type="button"
                             class="btn btn-info"
@@ -184,16 +185,13 @@ export default {
                     ? "categorieIndex/" + outputCategorie.id
                     : "categorieIndex";
 
-            axios
-                .get(categorie_id)
+            axios.get(categorie_id).then(response => {
+                this.outputCategories = response.data.categories;
 
-                .then(response => {
-                    this.outputCategories = response.data.categories;
-
-                    $(function() {
-                        $('[data-tooltip="tooltip"]').tooltip();
-                    });
+                $(function() {
+                    $('[data-tooltip="tooltip"]').tooltip();
                 });
+            });
         },
         returnCategorie(categorie = null) {
             if (categorie !== null) {

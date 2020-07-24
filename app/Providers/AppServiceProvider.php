@@ -28,15 +28,17 @@ class AppServiceProvider extends ServiceProvider
         $events->listen(BuildingMenu::class, function (BuildingMenu $event){
             $authVerify = auth()->guard('admin')->user()->status;
 
-            if($authVerify == 6 || $authVerify == 10){
-                $event->menu->add(
-                    [
-                        'text' => 'Encomendas',
-                        'icon' => 'fas fa-fw fa-shopping-bag',
-                        'url'  => 'admin/encomendas',
-                    ],
-                );
-            }
+            // Financeiro
+            // if($authVerify == 6 || $authVerify == 10){
+            //     $event->menu->add(
+            //         [
+            //             'text' => 'Encomendas',
+            //             'icon' => 'fas fa-fw fa-shopping-bag',
+            //             'url'  => 'admin/encomendas',
+            //         ],
+            //     );
+            // }
+            // Vendedor
             if($authVerify == 4 || $authVerify == 10){
                 $event->menu->add(
                     [
@@ -57,26 +59,28 @@ class AppServiceProvider extends ServiceProvider
                     ],
                 );
             }
-            if($authVerify == 2 || $authVerify == 10){
-                $event->menu->add(
-                    [
-                        'text'    => 'Clientes',
-                        'icon'    => 'fas fa-fw fa-users',
-                        'submenu' => [
-                            [
-                                'text' => 'Clientes',
-                                'url'  => 'admin/clientes/clientes',
-                                'icon' => 'fas fa-fw fa-angle-right'
-                            ],
-                            [
-                                'text' => 'Endereços',
-                                'url'  => 'admin/clientes/enderecos',
-                                'icon' => 'fas fa-fw fa-angle-right'
-                            ],
-                        ],
-                    ],
-                );
-            }
+            // Suporte
+            // if($authVerify == 2 || $authVerify == 10){
+            //     $event->menu->add(
+            //         [
+            //             'text'    => 'Clientes',
+            //             'icon'    => 'fas fa-fw fa-users',
+            //             'submenu' => [
+            //                 [
+            //                     'text' => 'Clientes',
+            //                     'url'  => 'admin/clientes/clientes',
+            //                     'icon' => 'fas fa-fw fa-angle-right'
+            //                 ],
+            //                 [
+            //                     'text' => 'Endereços',
+            //                     'url'  => 'admin/clientes/enderecos',
+            //                     'icon' => 'fas fa-fw fa-angle-right'
+            //                 ],
+            //             ],
+            //         ],
+            //     );
+            // }
+            // Administrador
             if($authVerify == 10){
                 $event->menu->add(
                     [
@@ -86,6 +90,7 @@ class AppServiceProvider extends ServiceProvider
                     ],
                 );
             }
+            // Todos os acessos
             if($authVerify == 2 || $authVerify == 4 ||$authVerify == 6 || $authVerify == 10){
                 $event->menu->add(
                     ['header' => 'Contas'],
@@ -96,6 +101,7 @@ class AppServiceProvider extends ServiceProvider
                     ],
                 );
             }
+            // Administrador
             if($authVerify == 10){
                 $event->menu->add(
                     [

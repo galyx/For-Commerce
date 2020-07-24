@@ -18,6 +18,11 @@ class PainelController extends Controller
     }
 
     // Vendedor
+    public function produtos()
+    {
+        return view('painel.catalogos.produtos');
+    }
+
     public function categorias()
     {
         return view('painel.catalogos.categorias');

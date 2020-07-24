@@ -19,11 +19,18 @@ Route::get('/', 'SiteController@index');
 Route::get('produto/{slug}', 'SiteController@produto');
 Route::get('categoria/{slug}', 'SiteController@categoria');
 
+// Pages
+Route::get('sobre/{page}', 'SiteController@sobre');
+Route::get('contato/{page}', 'SiteController@contato');
+
 // Consulta Endereço
 Route::post('cep/{cep?}', 'SiteController@cepConsulta');
 
+// Funções
+Route::post('faleConosco', 'SiteController@faleConosco');
+
 // Perfil
-Route::prefix('perfil')->middleware(['auth', 'verified'])->group(function(){
+Route::prefix('perfil')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'SiteController@perfil');
 
     // Dsdos do Perfil
@@ -41,14 +48,7 @@ Route::prefix('perfil')->middleware(['auth', 'verified'])->group(function(){
     Route::get('destroyAddress/{id}', 'PerfilController@destroyAddress');
 });
 
-// Pages
-Route::get('sobre/{page}', 'SiteController@sobre');
-Route::get('contato/{page}', 'SiteController@contato');
-
-// Funções
-Route::post('faleConosco', 'SiteController@faleConosco');
-
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->group(function () {
     // Rotas de login para o administrador
     Route::get('login', 'Auth\LoginController@showAdminLoginForm');
     Route::get('register', 'Auth\RegisterController@showAdminRegisterForm');
@@ -65,16 +65,23 @@ Route::prefix('admin')->group(function(){
     Route::get('imageIndex', 'ImagensController@index');
     Route::post('imageStore', 'ImagensController@store');
     Route::get('imageDestroy/{id}', 'ImagensController@destroy');
-    
+
     // Catalogos
-    Route::prefix('catalogos')->group(function(){
+    Route::prefix('catalogos')->group(function () {
+        Route::get('produtos', 'PainelController@produtos');
         Route::get('categorias', 'PainelController@categorias');
 
         // Categorias
-        Route::get('categorieIndex/{slug?}', 'CategorieController@index');
+        Route::get('categorieIndex/{id?}', 'CategorieController@index');
         Route::post('categorieStore', 'CategorieController@store');
         Route::get('categorieDestroy/{id}', 'CategorieController@destroy');
         Route::post('categorieUpdate', 'CategorieController@update');
+
+        // Produtos
+        Route::get('productIndex/{id?}', 'ProductController@index');
+        Route::post('productStore', 'ProductController@store');
+        Route::get('productDestroy/{id}', 'ProductController@destroy');
+        Route::post('productUpdate', 'ProductController@update');
     });
 
     // Admins Edits
