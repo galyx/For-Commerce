@@ -13,14 +13,13 @@ class CategorieController extends Controller
             return response()->json(['categories' => Categorie::where('categorie_id', $categorie_id)->with('childrenCategories')->get(), 'categorie' => Categorie::where('id', $categorie_id)->with('childrenCategories')->get()]);
         }else{
             return response()->json(['categories' => Categorie::whereNull('categorie_id')->with('childrenCategories')->get()]);
-            // return response()->json(Categorie::whereNull('categorie_id')->with('childrenCategories')->get());
         }
     }
 
     public function store(Request $request)
     {
         if($request->categorie_id){
-            if(Categorie::where('categorie_id', $request->categorie_id)->get()->count() < 10){
+            if(Categorie::where('categorie_id', $request->categorie_id)->get()->count() < 15){
                 Categorie::create(['name' => mb_convert_case($request->categorie, MB_CASE_TITLE), 'categorie_id' => $request->categorie_id]);
     
                 return response()->json(['status' => 200]);
@@ -42,7 +41,11 @@ class CategorieController extends Controller
     {
         $categorie = Categorie::find($request->id);
 
-        $categorie->update(['name' => mb_convert_case($request->categorie, MB_CASE_UPPER)]);
+        if($categorie->categorie_id == null){
+            $categorie->update(['name' => mb_convert_case($request->categorie, MB_CASE_UPPER)]);
+        }else{
+            $categorie->update(['name' => mb_convert_case($request->categorie, MB_CASE_TITLE)]);
+        }
 
         return response()->json(['status' => 200]);
     }

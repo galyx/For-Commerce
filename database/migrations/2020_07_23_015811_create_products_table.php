@@ -19,19 +19,17 @@ class CreateProductsTable extends Migration
             $table->string('product_name');
             $table->string('slug');
             $table->string('short_description');
-            $table->string('category');
+            $table->string('group');
             $table->string('type_sale')->nullable();
             $table->string('price');
-            $table->string('promotional_price')->nullable();
             $table->string('brand')->nullable();
             $table->string('width')->nullable();
             $table->string('height')->nullable();
             $table->string('diameter')->nullable();
             $table->string('weight')->nullable();
             $table->string('free_shipping');
-            $table->string('stock')->nullable();
-            $table->string('product_image');
             $table->string('description')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

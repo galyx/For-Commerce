@@ -11,7 +11,7 @@ class Product extends Model
     use HasSlug;
 
     protected $fillable = [
-        'codigo', 'product_name', 'short_description', 'category', 'type_sale', 'price', 'promotional_price', 'brand', 'width', 'height', 'diameter', 'weight', 'free_shipping', 'stock', 'product_image', 'description',
+        'codigo', 'product_name', 'short_description', 'group', 'type_sale', 'price', 'brand', 'width', 'height', 'diameter', 'weight', 'free_shipping', 'description', 'status',
     ];
 
     /**

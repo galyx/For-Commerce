@@ -14,7 +14,8 @@
                         </button>
                     </div>
                     <div v-if="categorie" class="col-4">
-                        <h3>{{ categorie.name | uppercase }}</h3>
+                        <h3>Categoria: {{ categorie.name | uppercase }}</h3>
+                        <span v-if="nivel != 0">Nivel: {{nivel}} <span v-if="nivel == 5">Maximo</span></span>
                     </div>
                     <div class="col-4">
                         <button
@@ -30,7 +31,7 @@
                         <button
                             type="button"
                             class="btn btn-info"
-                            v-on:click="returnCategorie(categorie)"
+                            v-on:click="returnCategorie(categorie), maxNivel('-')"
                         >
                             <i class="fa fa-arrow-left"></i> Voltar
                         </button>
@@ -82,20 +83,22 @@
                                         <button
                                             type="button"
                                             class="btn btn-primary"
+                                            :disabled="nivel == 5"
                                             v-on:click="
                                                 addSubCategorie(outputCategorie)
                                             "
                                         >
-                                            <i class="fa fa-ad"></i>
+                                            <i class="fa fa-plus"></i>
                                             Nova Sub Categoria
                                         </button>
                                         <button
                                             type="button"
                                             class="btn btn-secondary"
+                                            :disabled="nivel == 5"
                                             v-on:click="
                                                 getResultCategories(
                                                     outputCategorie
-                                                )
+                                                ), maxNivel('+')
                                             "
                                         >
                                             <i class="fa fa-eye"></i>
@@ -158,7 +161,9 @@ export default {
             trashAll: [],
             trash: false,
             outputCategories: {},
-            categorie: {}
+            categorie: {},
+            nivel: 0,
+            disabled: 0
         };
     },
     created() {
@@ -186,6 +191,7 @@ export default {
                     : "categorieIndex";
 
             axios.get(categorie_id).then(response => {
+                // Busca as categorias
                 this.outputCategories = response.data.categories;
 
                 $(function() {
@@ -289,10 +295,17 @@ export default {
                 allowOutsideClick: () => !this.$swal.isLoading()
             }).then(result => {
                 if (result.value) {
-                    this.getResultCategories();
+                    const categorie_id =
+                        this.categorie !== ""
+                            ? "categorieIndex/" + this.categorie.id
+                            : "categorieIndex";
+
+                    axios.get(categorie_id).then(response => {
+                        this.outputCategories = response.data.categories;
+                    });
 
                     this.$swal({
-                        title: "Categoria alterada com sucesso!",
+                        title: "Categoria registrada com successo",
                         icon: "success",
                         showConfirmButton: false,
                         timer: 1500
@@ -410,12 +423,17 @@ export default {
                 if (result.value == 201) {
                     this.$swal({
                         title:
-                            "Maximo 15 Categorias podem estar registradas na principal.",
+                            "Maximo 15 Categorias podem estar registradas.",
                         icon: "error",
                         showConfirmButton: true
                     });
                 }
             });
+        },
+        maxNivel(valor){
+            if(valor == '+') {this.nivel += 1;}
+
+            if(valor == '-') {this.nivel -= 1;}
         }
     },
     filters: {

@@ -59,7 +59,7 @@ class ImagensController extends Controller
     // Função bytes
     public static function bytesToHuman($bytes)
     {
-        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
         for ($i = 0; $bytes > 1024; $i++) {
             $bytes /= 1024;

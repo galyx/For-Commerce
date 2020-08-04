@@ -25,9 +25,16 @@
                         <div class="card-image">
                             <div class="card-tiulo-image">
                                 <div class="card-titulo">
-                                    <a target="_blank" :href="image.path"><i class="fa fa-eye"></i></a>
-                                    <span>{{image.image_name}}</span>
-                                    <a class="text-danger" v-on:click="imageDestroy(image)" href="#"><i class="fa fa-trash"></i></a>
+                                    <a target="_blank" :href="image.path"
+                                        ><i class="fa fa-eye"></i
+                                    ></a>
+                                    <span>{{ image.image_name }}</span>
+                                    <a
+                                        class="text-danger"
+                                        v-on:click="imageDestroy(image)"
+                                        href="#"
+                                        ><i class="fa fa-trash"></i
+                                    ></a>
                                 </div>
                             </div>
                             <div class="card-body-image">
@@ -35,9 +42,12 @@
                             </div>
                             <div class="card-footer-image">
                                 <div class="card-titulo">
-                                    <span>{{image.extension}}</span>
-                                    <span>{{image.size}}</span>
-                                    <span>{{image.wxh[0]}} x {{image.wxh[1]}}</span>
+                                    <span>{{ image.extension }}</span>
+                                    <span>{{ image.size }}</span>
+                                    <span
+                                        >{{ image.wxh[0] }} x
+                                        {{ image.wxh[1] }}</span
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -145,9 +155,9 @@ export default {
                 cancelButtonText: "Não, Mantê-la"
             }).then(result => {
                 if (result.value) {
-                    axios.get('imageDestroy/'+image.id).then(response => {
-                       this.getImages();
-                       console.log(response);
+                    axios.get("imageDestroy/" + image.id).then(response => {
+                        this.getImages();
+                        console.log(response);
                         this.$swal({
                             title: "Deletado!",
                             html:
@@ -160,7 +170,7 @@ export default {
                 }
             });
         },
-        uploadFiles: function() {
+        uploadFiles() {
             // Using the default uploader. You may use another uploader instead.
             this.$refs.vueFileAgent
                 .upload(
@@ -173,7 +183,7 @@ export default {
                 });
             this.fileRecordsForUpload = [];
         },
-        filesSelected: function(fileRecordsNewlySelected) {
+        filesSelected(fileRecordsNewlySelected) {
             var validFileRecords = fileRecordsNewlySelected.filter(
                 fileRecord => !fileRecord.error
             );
@@ -181,12 +191,12 @@ export default {
                 validFileRecords
             );
         },
-        onBeforeDelete: function(fileRecord) {
+        onBeforeDelete(fileRecord) {
             var i = this.fileRecordsForUpload.indexOf(fileRecord);
             this.fileRecordsForUpload.splice(i, 1);
             this.$refs.vueFileAgent.deleteFileRecord(fileRecord);
         },
-        fileDeleted: function(fileRecord) {
+        fileDeleted(fileRecord) {
             var i = this.fileRecordsForUpload.indexOf(fileRecord);
             this.fileRecordsForUpload.splice(i, 1);
         }
