@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Painel Dev-Commerce')
+@section('title', 'Painel For-Commerce')
 
 @section('content_header')
     <h1>Categorias</h1>
