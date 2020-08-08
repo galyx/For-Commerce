@@ -7,5 +7,5 @@ Acesso 6 = Financeiro<br />
 acesso 10 = Administrador<br />
 <br /><br />
 Pastas:<br />
-<strong>Providers/AppServiceProvider.php</strong>
+<strong>Providers/AppServiceProvider.php</strong><br />
 Neste arquivo estão as permissões de usuarios onde se mostra os acessos para cada usuario com seu nivel de acesso.
