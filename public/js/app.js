@@ -3782,6 +3782,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -3839,8 +3909,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       axios.get("../imageIndex").then(function (result) {
-        _this3.mainImages = result.data;
+        _this3.images = result.data;
       });
+    },
+    addImage: function addImage(image) {
+      this.images.splice(this.images.indexOf(image), 1);
+      this.mainImages.push(image);
+    },
+    removeImage: function removeImage(mainImage) {
+      this.mainImages.splice(this.mainImages.indexOf(mainImage), 1);
+      this.images.push(mainImage);
     }
   },
   filters: {}
@@ -73806,7 +73884,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-row" }, [
-                    _c("div", { staticClass: "form-group col-12 col-md-6" }, [
+                    _c("div", { staticClass: "form-group col-12 col-lg-6" }, [
                       _c("h4", [_vm._v("Categorias")]),
                       _vm._v(" "),
                       _c(
@@ -73862,7 +73940,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group col-12 col-md-6" }, [
+                    _c("div", { staticClass: "form-group col-12 col-lg-6" }, [
                       _c("h4", [_vm._v("Categorias Adicionadas")]),
                       _vm._v(" "),
                       _c(
@@ -73907,8 +73985,123 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-row" }, [
-                    _c("div", { staticClass: "form-group col-12 col-md-6" }, [
+                    _c("div", { staticClass: "form-group col-12 col-lg-6" }, [
                       _c("h4", [_vm._v("Imagens")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "image-box" },
+                        _vm._l(_vm.images, function(image) {
+                          return _c(
+                            "div",
+                            {
+                              key: image.id,
+                              staticClass:
+                                "image-label d-flex justify-content-between"
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "preview-card-image text-center"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "preview-card-body-image" },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src: image.path,
+                                          alt: "Imagem"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "my-auto" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "text-center preview-card-titulo text-truncate"
+                                  },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          target: "_blank",
+                                          href: image.path
+                                        }
+                                      },
+                                      [_c("i", { staticClass: "fa fa-eye" })]
+                                    ),
+                                    _vm._v(
+                                      "\n                                                " +
+                                        _vm._s(image.image_name) +
+                                        "\n                                            "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "d-flex justify-content-between preview-card-titulo"
+                                  },
+                                  [
+                                    _c("span", [
+                                      _vm._v(_vm._s(image.extension))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v(_vm._s(image.size))]),
+                                    _vm._v(" "),
+                                    _c("span", [
+                                      _vm._v(
+                                        _vm._s(image.wxh[0]) +
+                                          "\n                                                    x\n                                                    " +
+                                          _vm._s(image.wxh[1])
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "my-auto" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-sm btn-primary m-2",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.addImage(image)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                                Adicionar\n                                                "
+                                    ),
+                                    _c("i", {
+                                      staticClass: "fa fa-chevron-right"
+                                    })
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-12 col-lg-6" }, [
+                      _c("h4", [_vm._v("Imagens Adicionadas")]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -73995,15 +74188,32 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm._m(2, true)
+                              _c("div", { staticClass: "my-auto" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-sm btn-danger m-2",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeImage(mainImage)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                                Remover\n                                                "
+                                    ),
+                                    _c("i", { staticClass: "fa fa-times" })
+                                  ]
+                                )
+                              ])
                             ]
                           )
                         }),
                         0
                       )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(3)
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
@@ -74088,36 +74298,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "my-auto" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-sm btn-primary m-2",
-          attrs: { type: "button" }
-        },
-        [
-          _vm._v(
-            "\n                                                Adicionar\n                                                "
-          ),
-          _c("i", { staticClass: "fa fa-chevron-right" })
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-12 col-md-6" }, [
-      _c("h4", [_vm._v("Imagens Adicionadas")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "image-box" })
     ])
   }
 ]

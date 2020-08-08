@@ -188,7 +188,7 @@
 
                             <!-- Categorias -->
                             <div class="form-row">
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-lg-6">
                                     <h4>Categorias</h4>
                                     <div class="categorie-box">
                                         <div
@@ -221,7 +221,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-lg-6">
                                     <h4>Categorias Adicionadas</h4>
                                     <div class="categorie-box">
                                         <div
@@ -251,8 +251,77 @@
 
                             <!-- Imagens -->
                             <div class="form-row">
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-lg-6">
                                     <h4>Imagens</h4>
+                                    <div class="image-box">
+                                        <div
+                                            class="image-label d-flex justify-content-between"
+                                            v-for="image in images"
+                                            :key="image.id"
+                                        >
+                                            <div
+                                                class="preview-card-image text-center"
+                                            >
+                                                <div
+                                                    class="preview-card-body-image"
+                                                >
+                                                    <img
+                                                        :src="image.path"
+                                                        alt="Imagem"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="my-auto">
+                                                <div
+                                                    class="text-center preview-card-titulo text-truncate"
+                                                >
+                                                    <a
+                                                        target="_blank"
+                                                        :href="image.path"
+                                                        ><i
+                                                            class="fa fa-eye"
+                                                        ></i
+                                                    ></a>
+                                                    {{ image.image_name }}
+                                                </div>
+
+                                                <div
+                                                    class="d-flex justify-content-between preview-card-titulo"
+                                                >
+                                                    <span>{{
+                                                        image.extension
+                                                    }}</span>
+                                                    <span>{{
+                                                        image.size
+                                                    }}</span>
+                                                    <span
+                                                        >{{ image.wxh[0] }}
+                                                        x
+                                                        {{
+                                                            image.wxh[1]
+                                                        }}</span
+                                                    >
+                                                </div>
+                                            </div>
+
+                                            <div class="my-auto">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-primary m-2"
+                                                    v-on:click="addImage(image)"
+                                                >
+                                                    Adicionar
+                                                    <i
+                                                        class="fa fa-chevron-right"
+                                                    ></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    <h4>Imagens Adicionadas</h4>
                                     <div class="image-box">
                                         <div
                                             class="image-label d-flex justify-content-between"
@@ -308,20 +377,21 @@
                                             <div class="my-auto">
                                                 <button
                                                     type="button"
-                                                    class="btn btn-sm btn-primary m-2"
+                                                    class="btn btn-sm btn-danger m-2"
+                                                    v-on:click="
+                                                    removeImage(
+                                                        mainImage
+                                                    )
+                                                "
                                                 >
-                                                    Adicionar
+                                                    Remover
                                                     <i
-                                                        class="fa fa-chevron-right"
+                                                        class="fa fa-times"
                                                     ></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <h4>Imagens Adicionadas</h4>
-                                    <div class="image-box"></div>
                                 </div>
                             </div>
                         </div>
@@ -401,8 +471,16 @@ export default {
         },
         getImages() {
             axios.get("../imageIndex").then(result => {
-                this.mainImages = result.data;
+                this.images = result.data;
             });
+        },
+        addImage(image) {
+            this.images.splice(this.images.indexOf(image),1);
+            this.mainImages.push(image);
+        },
+        removeImage(mainImage) {
+            this.mainImages.splice(this.mainImages.indexOf(mainImage),1);
+            this.images.push(mainImage);
         }
     },
     filters: {}
