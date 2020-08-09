@@ -132,6 +132,14 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        placeholder="Familia do Produto"
+                                        v-model="group"
+                                    />
+                                </div>
+                                <div class="form-group col-6 col-md-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
                                         placeholder="Preço"
                                         v-model="price"
                                     />
@@ -396,7 +404,7 @@
                             </div>
 
                             <!-- Descrição do Produto -->
-                            
+                            <vue-editor v-model="description"></vue-editor>
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button
@@ -423,7 +431,7 @@ export default {
             codigo: "",
             Product_name: "",
             short_description: "",
-            group: "Sem Grupo",
+            group: "",
             type_sale: "",
             price: "",
             brand: "",

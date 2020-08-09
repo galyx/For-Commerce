@@ -11,6 +11,7 @@ window.Vue = require('vue');
 import moment from 'moment';
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueFileAgent from 'vue-file-agent';
+import VueEditor from "vue2-editor";
 
 Vue.filter('formatDate', function(value) {
     if (value) {
@@ -22,6 +23,7 @@ Vue.filter('formatDate', function(value) {
 Vue.use(require('vue-resource'));
 Vue.use(VueSweetalert2);
 Vue.use(VueFileAgent);
+Vue.use(VueEditor);
 
 /**
  * The following block of code may be used to automatically register your
