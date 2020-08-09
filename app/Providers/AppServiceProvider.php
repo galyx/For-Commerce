@@ -55,6 +55,27 @@ class AppServiceProvider extends ServiceProvider
                                 'url'  => 'admin/catalogos/categorias',
                                 'icon' => 'fas fa-fw fa-angle-right'
                             ],
+                            [
+                                'text'    => 'Tags',
+                                'icon'    => 'fas fa-fw fa-tags',
+                                'submenu' => [
+                                    [
+                                        'text' => 'Catalogos de Cores',
+                                        'url'  => 'admin/catalogos/tags/cores',
+                                        'icon' => 'fas fa-fw fa-angle-right',
+                                    ],
+                                    [
+                                        'text' => 'Marcas dos Produtos',
+                                        'url'  => 'admin/catalogos/tags/marcas',
+                                        'icon' => 'fas fa-fw fa-angle-right',
+                                    ],
+                                    [
+                                        'text' => 'Família do Produtos',
+                                        'url'  => 'admin/catalogos/tags/familia',
+                                        'icon' => 'fas fa-fw fa-angle-right',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                 );

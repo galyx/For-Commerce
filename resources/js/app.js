@@ -40,12 +40,17 @@ Vue.use(VueEditor);
 Vue.component('admin-component', require('./components/Admin.vue').default);
 // Perfil do Admin
 Vue.component('perfiladmin-component', require('./components/PerfilAdmin.vue').default);
-// Categorias
-Vue.component('categorie-component', require('./components/Categorie.vue').default);
 // Imagens
 Vue.component('imagens-component', require('./components/Imagens.vue').default);
+
+// Catalogos
+// Categorias
+Vue.component('categorie-component', require('./components/catalogos/Categorie.vue').default);
 // Produtos
-Vue.component('produtos-component', require('./components/Product.vue').default);
+Vue.component('produtos-component', require('./components/catalogos/Product.vue').default);
+// Tags
+// Catalogo de Cores
+Vue.component('cores-component', require('./components/catalogos/tags/Colors.vue').default);
 
 // Paginação
 Vue.component('pagination', require('laravel-vue-pagination'));

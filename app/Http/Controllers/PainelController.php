@@ -28,6 +28,11 @@ class PainelController extends Controller
         return view('painel.catalogos.categorias');
     }
 
+    public function cores()
+    {
+        return view('painel.catalogos.tags.cores');
+    }
+
     // Administrador
     public function perfil()
     {

@@ -82,6 +82,11 @@ Route::prefix('admin')->group(function () {
         Route::post('productStore', 'ProductController@store');
         Route::get('productDestroy/{id}', 'ProductController@destroy');
         Route::post('productUpdate', 'ProductController@update');
+
+        // Tags
+        Route::prefix('tags')->group(function(){
+            Route::get('cores', 'PainelController@cores');
+        });
     });
 
     // Admins Edits

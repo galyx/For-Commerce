@@ -140,6 +140,15 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        placeholder="Catalogo de Cor"
+                                        v-model="colors"
+                                    />
+                                </div>
+
+                                <div class="form-group col-6 col-md-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
                                         placeholder="Preço"
                                         v-model="price"
                                     />
@@ -306,9 +315,7 @@
                                                     <span
                                                         >{{ image.wxh[0] }}
                                                         x
-                                                        {{
-                                                            image.wxh[1]
-                                                        }}</span
+                                                        {{ image.wxh[1] }}</span
                                                     >
                                                 </div>
                                             </div>
@@ -387,15 +394,11 @@
                                                     type="button"
                                                     class="btn btn-sm btn-danger m-2"
                                                     v-on:click="
-                                                    removeImage(
-                                                        mainImage
-                                                    )
-                                                "
+                                                        removeImage(mainImage)
+                                                    "
                                                 >
                                                     Remover
-                                                    <i
-                                                        class="fa fa-times"
-                                                    ></i>
+                                                    <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -404,7 +407,14 @@
                             </div>
 
                             <!-- Descrição do Produto -->
-                            <vue-editor v-model="description"></vue-editor>
+                            <div class="form-row">
+                                <div class="form-group col-12 mt-2">
+                                    <h4>Descrição Completa</h4>
+                                    <vue-editor
+                                        v-model="description"
+                                    ></vue-editor>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button
@@ -431,6 +441,7 @@ export default {
             codigo: "",
             Product_name: "",
             short_description: "",
+            colors: "",
             group: "",
             type_sale: "",
             price: "",
@@ -486,11 +497,11 @@ export default {
             });
         },
         addImage(image) {
-            this.images.splice(this.images.indexOf(image),1);
+            this.images.splice(this.images.indexOf(image), 1);
             this.mainImages.push(image);
         },
         removeImage(mainImage) {
-            this.mainImages.splice(this.mainImages.indexOf(mainImage),1);
+            this.mainImages.splice(this.mainImages.indexOf(mainImage), 1);
             this.images.push(mainImage);
         }
     },
