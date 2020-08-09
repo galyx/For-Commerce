@@ -30,6 +30,7 @@
         "moment": "^2.27.0",
         "pusher-js": "^6.0.3",
         "slick-carousel": "^1.8.1",
+        "summernote": "^0.8.18",
         "vue-file-agent": "^1.7.3",
         "vue-resource": "^1.5.1",
         "vue-sweetalert2": "^3.0.6",

@@ -394,6 +394,9 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Descrição do Produto -->
+                            
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button
