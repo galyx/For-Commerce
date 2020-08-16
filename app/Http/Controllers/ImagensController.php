@@ -33,7 +33,7 @@ class ImagensController extends Controller
         $image = $request->file('file')->store('BIMG', 'public');
 
         Image::create([
-            'image_name' => pathinfo($request->filename, PATHINFO_FILENAME),
+            'image_name' => str_replace(array("_","-"), " ", pathinfo($request->filename, PATHINFO_FILENAME)),
             'path' => $image,
         ]);
 

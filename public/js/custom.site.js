@@ -67,7 +67,7 @@ if (document.querySelector(".cepConsulta")) {
 
         cep.disabled = true;
 
-        let href = window.location.protocol+'//'+window.location.host+'/Dev-Commerce/public/';
+        let href = window.location.protocol+'//'+window.location.host+'/For-Commerce/public/';
 
         axios
             .post(href+"cep/" + cep.value)

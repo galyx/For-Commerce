@@ -25,6 +25,10 @@ Vue.use(VueSweetalert2);
 Vue.use(VueFileAgent);
 Vue.use(VueEditor);
 
+import Verte from 'verte';
+import 'verte/dist/verte.css';
+Vue.component('verte', Verte);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

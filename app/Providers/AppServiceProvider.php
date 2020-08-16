@@ -70,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
                                         'icon' => 'fas fa-fw fa-angle-right',
                                     ],
                                     [
-                                        'text' => 'Família do Produtos',
+                                        'text' => 'Família dos Produtos',
                                         'url'  => 'admin/catalogos/tags/familia',
                                         'icon' => 'fas fa-fw fa-angle-right',
                                     ],

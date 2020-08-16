@@ -85,7 +85,9 @@ Route::prefix('admin')->group(function () {
 
         // Tags
         Route::prefix('tags')->group(function(){
+            // Catalogo de cores
             Route::get('cores', 'PainelController@cores');
+            Route::post('colorStore', 'TagsController@colorStore');
         });
     });
 
