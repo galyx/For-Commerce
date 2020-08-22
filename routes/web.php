@@ -79,7 +79,7 @@ Route::prefix('admin')->group(function () {
 
         // Produtos
         Route::get('productIndex/{id?}', 'ProductController@index');
-        Route::post('productStore', 'ProductController@store');
+        Route::any('productStore', 'ProductController@store');
         Route::get('productDestroy/{id}', 'ProductController@destroy');
         Route::post('productUpdate', 'ProductController@update');
 
@@ -100,3 +100,5 @@ Route::prefix('admin')->group(function () {
     // Perfil Edit
     Route::post('perfilUpdate', 'AdminController@perfilUpdate');
 });
+
+Route::resource('calculadora', 'CalculatorController');

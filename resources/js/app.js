@@ -56,6 +56,10 @@ Vue.component('produtos-component', require('./components/catalogos/Product.vue'
 // Catalogo de Cores
 Vue.component('cores-component', require('./components/catalogos/tags/Colors.vue').default);
 
+
+//calculadora
+Vue.component('calculadora-component', require('./components/calculadora.vue').default);
+
 // Paginação
 Vue.component('pagination', require('laravel-vue-pagination'));
 

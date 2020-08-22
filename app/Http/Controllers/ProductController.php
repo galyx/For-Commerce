@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductToCategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -25,7 +26,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        $save = Product::create([
+            'codigo' => $request->codigo,
+            'product_name' => $request->product_name,
+            'short_description' => $request->short_description,
+            'colors' => $request->colors,
+            'group' => $request->group,
+            'type_sale' => $request->type_sale,
+            'price' => $request->price,
+            'width' => $request->width,
+            'height' => $request->height,
+            'diameter' => $request->diameter,
+            'weight' => $request->weight,
+            'free_shipping' => $request->free_shipping,
+            'description' => $request->description,
+            'status' => $request->status,
+            'mainCategories' => $request->mainCategories,
+            'weight' => $request->weight,
+            'categories' => $request->categories,
+            'images' => $request->images,
+            'disabled' => $request->disabled,
+             
+        ]);
+
+        // $categories = ProductToCategory::create([
+        //     'categorie_id' => $request->categorie_id,
+        //     'product_id' => $save->id,
+        // ]);
+
+        return $save;
     }
 
     /**

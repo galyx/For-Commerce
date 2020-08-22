@@ -26,21 +26,21 @@
         >
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content bg-secondary">
-                    <form method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalProductsLabel">
-                                Novo Produto
-                            </h5>
-                            <button
-                                type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Fechar"
-                            >
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalProductsLabel">
+                            Novo Produto
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Fechar"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="salvar">
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <input
@@ -415,18 +415,14 @@
                                     ></vue-editor>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer justify-content-center">
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                                :disabled="disabled == 1"
-                            >
-                                <span class="fa fa-save"></span>
-                                Registrar Produto
-                            </button>
-                        </div>
-                    </form>
+                            <div class="modal-footer justify-content-center">
+                                <button class="btn btn-primary">
+                                    <span class="fa fa-save"></span>
+                                    Registrar Produto
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -457,7 +453,7 @@ export default {
             mainImages: [],
             categories: {},
             images: {},
-            disabled: 0
+            disabled: 0,
         };
     },
     created() {
@@ -471,7 +467,7 @@ export default {
                     ? "categorieIndex/" + categorie.id
                     : "categorieIndex";
 
-            axios.get(categorie_id).then(response => {
+            axios.get(categorie_id).then((response) => {
                 this.categories = response.data.categories;
             });
         },
@@ -487,12 +483,12 @@ export default {
                     ? "categorieIndex/" + categorie.categorie_id
                     : "categorieIndex";
 
-            axios.get(categorie_id).then(response => {
+            axios.get(categorie_id).then((response) => {
                 this.categories = response.data.categories;
             });
         },
         getImages() {
-            axios.get("../imageIndex").then(result => {
+            axios.get("../imageIndex").then((result) => {
                 this.images = result.data;
             });
         },
@@ -503,8 +499,41 @@ export default {
         removeImage(mainImage) {
             this.mainImages.splice(this.mainImages.indexOf(mainImage), 1);
             this.images.push(mainImage);
-        }
+        },
+
+        //cadastrando produto
+        salvar() {
+
+      
+            axios
+                .post("productStore", {
+                    codigo: this.codigo,
+                    product_name: this.Product_name,
+                    short_description: this.short_description,
+                    colors:  this.colors,
+                    group: this.group,
+                    type_sale: this.type_sale,
+                    price: this.price,
+                    brand: this.brand,
+                    width: this.width,
+                    height: this.height,
+                    diameter: this.diameter,
+                    weight: this.weight,
+                    free_shipping: this.free_shipping,
+                    description: this.description,
+                    status: this.status,
+                    categorie_id: this.mainCategories,
+                    mainImages: this.mainImages,
+                    categories: this.categories,
+                    images: this.images,
+                    disabled: this.disabled,
+                    
+                })
+                .then((response) => {
+                    console.log(response);
+                });
+        },
     },
-    filters: {}
+    filters: {},
 };
 </script>
