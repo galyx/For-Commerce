@@ -55,7 +55,10 @@ Vue.component('produtos-component', require('./components/catalogos/Product.vue'
 // Tags
 // Catalogo de Cores
 Vue.component('cores-component', require('./components/catalogos/tags/Colors.vue').default);
-
+// Marcas de Produtos
+Vue.component('marcas-component', require('./components/catalogos/tags/Brand.vue').default);
+// Familia dos Produtos
+Vue.component('familia-component', require('./components/catalogos/tags/Family.vue').default);
 
 //calculadora
 Vue.component('calculadora-component', require('./components/calculadora.vue').default);

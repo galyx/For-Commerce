@@ -33,6 +33,16 @@ class PainelController extends Controller
         return view('painel.catalogos.tags.cores');
     }
 
+    public function marcas()
+    {
+        return view('painel.catalogos.tags.marcas');
+    }
+
+    public function familia()
+    {
+        return view('painel.catalogos.tags.familia');
+    }
+
     // Administrador
     public function perfil()
     {

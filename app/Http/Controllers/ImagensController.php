@@ -13,14 +13,13 @@ class ImagensController extends Controller
         $images = [];
         
         foreach(Image::all() as $image){
-           
             
             $images[] = [
                 'id' => $image->id,
                 'image_name' => $image->image_name,
-                'path' => asset('storage/'.$image->path),
-                'wxh' => getimagesize(asset('storage/'.$image->path)),
-                'size' => ImagensController::bytesToHuman(Storage::disk('public')->size($image->path)),
+                'path' => asset($image->path),
+                // 'wxh' => getimagesize(asset($image->path)),
+                'size' => ImagensController::bytesToHuman(Storage::disk('upload')->size($image->path)),
                 'extension' => pathinfo($image->path, PATHINFO_EXTENSION),
             ];
         }
@@ -30,7 +29,7 @@ class ImagensController extends Controller
 
     public function store(Request $request)
     {
-        $image = $request->file('file')->store('BIMG', 'public');
+        $image = $request->file('file')->store('BIMG', 'upload');
 
         Image::create([
             'image_name' => str_replace(array("_","-"), " ", pathinfo($request->filename, PATHINFO_FILENAME)),
@@ -49,7 +48,7 @@ class ImagensController extends Controller
     {
         $image = Image::find($id);
 
-        Storage::disk('public')->delete($image->path);
+        Storage::disk('upload')->delete($image->path);
 
         $image->delete();
 

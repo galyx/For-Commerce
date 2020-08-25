@@ -12,7 +12,93 @@
                     <i class="fa fa-plus"></i> Novo Produto
                 </button>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header"></div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Imagem</th>
+                                            <th>Produto</th>
+                                            <th>Data</th>
+                                            <th>Categoria</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="product in products"
+                                            :key="product.id"
+                                        >
+                                            <td>{{ product.codigo }}</td>
+                                            <td><img :src="product.images[0].path | rota" class="img-product"></td>
+                                            <td>{{ product.product_name }}</td>
+                                            <td>
+                                                {{
+                                                    product.created_at
+                                                        | formatDate
+                                                }}
+                                            </td>
+                                            <td>
+                                                {{ product.categories[0].name }}
+                                            </td>
+                                            <td>
+                                                <div
+                                                    class="btn-group"
+                                                    role="group"
+                                                    aria-label="Botões de ações"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary"
+                                                        data-tooltip="tooltip"
+                                                        data-placement="top"
+                                                        title="Editar Produto"
+                                                        v-on:click="
+                                                            modalAdminEdit(
+                                                                output
+                                                            )
+                                                        "
+                                                    >
+                                                        <i
+                                                            class="fa fa-user-edit"
+                                                        ></i>
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-danger"
+                                                        v-on:click="
+                                                            destroy(output)
+                                                        "
+                                                        data-tooltip="tooltip"
+                                                        data-placement="top"
+                                                        title="Deletar Administrador"
+                                                    >
+                                                        <i
+                                                            class="fa fa-trash"
+                                                        ></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <pagination
+                                :data="pages"
+                                @pagination-change-page="getProducts"
+                            ></pagination>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Modal de Novo Registro -->
@@ -39,8 +125,9 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
                     <div class="modal-body">
-                        <form @submit.prevent="salvar">
+                        <form @submit="addProduct" method="post">
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <input
@@ -55,7 +142,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="Nome do Produto"
-                                        v-model="Product_name"
+                                        v-model="product_name"
                                     />
                                 </div>
 
@@ -121,29 +208,115 @@
                                 </div>
 
                                 <div class="form-group col-6 col-md-3">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Marca do Produto"
-                                        v-model="brand"
-                                    />
+                                    <div class="dropdown">
+                                        <button
+                                            type="button"
+                                            id="drop_brand"
+                                            class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            style="width: 100%;"
+                                        >
+                                            -
+                                            <span v-if="brand">{{
+                                                brand.name
+                                            }}</span>
+                                            <span v-else
+                                                >Marcas do Produto</span
+                                            >
+                                            -
+                                        </button>
+
+                                        <div
+                                            class="dropdown-menu"
+                                            aria-labelledby="drop_brand"
+                                        >
+                                            <button
+                                                class="dropdown-item select-custom"
+                                                type="button"
+                                                v-for="brandId in brands"
+                                                :key="brandId.id"
+                                                v-on:click="brand = brandId"
+                                            >
+                                                {{ brandId.name }}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group col-6 col-md-3">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Familia do Produto"
-                                        v-model="group"
-                                    />
+                                    <div class="dropdown">
+                                        <button
+                                            type="button"
+                                            id="drop_family"
+                                            class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            style="width: 100%;"
+                                        >
+                                            -
+                                            <span v-if="family">{{
+                                                family.name
+                                            }}</span>
+                                            <span v-else
+                                                >Família do Produto</span
+                                            >
+                                            -
+                                        </button>
+
+                                        <div
+                                            class="dropdown-menu"
+                                            aria-labelledby="drop_family"
+                                        >
+                                            <button
+                                                class="dropdown-item select-custom"
+                                                type="button"
+                                                v-for="familyId in families"
+                                                :key="familyId.id"
+                                                v-on:click="family = familyId"
+                                            >
+                                                {{ familyId.name }}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group col-6 col-md-3">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Catalogo de Cor"
-                                        v-model="colors"
-                                    />
-                                </div>
+                                <!-- <div class="form-group col-6 col-md-3">
+                                    <div class="dropdown">
+                                        <button
+                                            type="button"
+                                            id="drop_colors"
+                                            class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            style="width: 100%;"
+                                        >
+                                            -
+                                            <span v-if="colors">{{
+                                                colors.name
+                                            }}</span>
+                                            <span v-else
+                                                >Catalogo de Cores</span
+                                            >
+                                            -
+                                        </button>
+
+                                        <div
+                                            class="dropdown-menu"
+                                            aria-labelledby="drop_colors"
+                                        >
+                                            <button
+                                                class="dropdown-item select-custom"
+                                                type="button"
+                                                v-for="colorId in catalogs" :key="colorId.id"
+                                                v-on:click="colors = colorId"
+                                            >
+                                                {{colorId.name}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> -->
 
                                 <div class="form-group col-6 col-md-3">
                                     <input
@@ -312,11 +485,11 @@
                                                     <span>{{
                                                         image.size
                                                     }}</span>
-                                                    <span
+                                                    <!-- <span
                                                         >{{ image.wxh[0] }}
                                                         x
                                                         {{ image.wxh[1] }}</span
-                                                    >
+                                                    > -->
                                                 </div>
                                             </div>
 
@@ -379,13 +552,13 @@
                                                     <span>{{
                                                         mainImage.size
                                                     }}</span>
-                                                    <span
+                                                    <!-- <span
                                                         >{{ mainImage.wxh[0] }}
                                                         x
                                                         {{
                                                             mainImage.wxh[1]
                                                         }}</span
-                                                    >
+                                                    > -->
                                                 </div>
                                             </div>
 
@@ -416,7 +589,10 @@
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-center">
-                                <button class="btn btn-primary">
+                                <button
+                                    class="btn btn-primary"
+                                    :disabled="disabled == 1"
+                                >
                                     <span class="fa fa-save"></span>
                                     Registrar Produto
                                 </button>
@@ -435,10 +611,10 @@ export default {
     data() {
         return {
             codigo: "",
-            Product_name: "",
+            product_name: "",
             short_description: "",
-            colors: "",
-            group: "",
+            colors: null,
+            family: "",
             type_sale: "",
             price: "",
             brand: "",
@@ -453,21 +629,53 @@ export default {
             mainImages: [],
             categories: {},
             images: {},
+            brands: {},
+            families: {},
+            catalogs: {},
+            errors: {},
             disabled: 0,
+            products: [],
+            pages: {}
         };
     },
     created() {
+        var teste = "teste";
         this.getResultCategories();
         this.getImages();
+        this.getBrands();
+        this.getFamilies();
+        // this.getCatalogs();
+        this.getProducts();
     },
     methods: {
+        getProducts(page) {
+            if (typeof page === "undefined") {
+                page = 1;
+            }
+            this.$http
+                .get("productIndex?page=" + page)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    // Paginas do admin
+                    this.pages = data;
+                    // Separado por pagina
+                    this.products = data.data;
+                    // Total para buscar por filtro
+
+                    $(function() {
+                        $('[data-tooltip="tooltip"]').tooltip();
+                    });
+                });
+        },
         getResultCategories(categorie = null) {
             const categorie_id =
                 categorie !== null
                     ? "categorieIndex/" + categorie.id
                     : "categorieIndex";
 
-            axios.get(categorie_id).then((response) => {
+            axios.get(categorie_id).then(response => {
                 this.categories = response.data.categories;
             });
         },
@@ -483,12 +691,12 @@ export default {
                     ? "categorieIndex/" + categorie.categorie_id
                     : "categorieIndex";
 
-            axios.get(categorie_id).then((response) => {
+            axios.get(categorie_id).then(response => {
                 this.categories = response.data.categories;
             });
         },
         getImages() {
-            axios.get("../imageIndex").then((result) => {
+            axios.get("../imageIndex").then(result => {
                 this.images = result.data;
             });
         },
@@ -500,18 +708,43 @@ export default {
             this.mainImages.splice(this.mainImages.indexOf(mainImage), 1);
             this.images.push(mainImage);
         },
+        getBrands() {
+            axios.get("./tags/brandIndex").then(res => {
+                this.brands = res.data.brandTotal;
+            });
+        },
+        getFamilies() {
+            axios.get("./tags/familyIndex").then(res => {
+                this.families = res.data.familyTotal;
+            });
+        },
+        // getCatalogs(){
+        //     axios.get('./tags/colorIndex').then(res => {
+        //         this.catalogs = res.data.colorTotal;
+        //     });
+        // },
 
         //cadastrando produto
-        salvar() {
+        addProduct(e) {
+            e.preventDefault();
+            this.disabled = 1;
 
-      
+            // Sweet para carregamento
+            this.$swal({
+                title: "Salvando Dados!",
+                onBeforeOpen: () => {
+                    this.$swal.showLoading();
+                }
+            });
+
+            // Conexão
             axios
                 .post("productStore", {
                     codigo: this.codigo,
-                    product_name: this.Product_name,
+                    product_name: this.product_name,
                     short_description: this.short_description,
-                    colors:  this.colors,
-                    group: this.group,
+                    colors: this.colors,
+                    family: this.family,
                     type_sale: this.type_sale,
                     price: this.price,
                     brand: this.brand,
@@ -522,18 +755,78 @@ export default {
                     free_shipping: this.free_shipping,
                     description: this.description,
                     status: this.status,
-                    categorie_id: this.mainCategories,
-                    mainImages: this.mainImages,
-                    categories: this.categories,
-                    images: this.images,
-                    disabled: this.disabled,
-                    
+                    mainCategories: this.mainCategories,
+                    mainImages: this.mainImages
                 })
-                .then((response) => {
-                    console.log(response);
+                .then(response => {
+                    this.$swal({
+                        title: "Produto registrado com successo!",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    // Limpeza dos campos para novos cadastros
+                    this.codigo = "";
+                    this.product_name = "";
+                    this.short_description = "";
+                    this.colors = "";
+                    this.family = "";
+                    this.type_sale = "";
+                    this.price = "";
+                    this.brand = "";
+                    this.width = "";
+                    this.height = "";
+                    this.diameter = "";
+                    this.weight = "";
+                    this.free_shipping = "";
+                    this.description = "";
+                    this.status = false;
+                    this.mainCategories = [];
+                    this.mainImages = [];
+
+                    this.getResultCategories();
+                    this.getImages();
+                    this.getBrands();
+                    this.getFamilies();
+                    this.getProducts();
+
+                    this.disabled = 0;
+                })
+                .catch(error => {
+                    this.$swal({
+                        title: "Oops...",
+                        html: "Algo deu errado",
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+
+                    this.disabled = 0;
+                    this.errors = error.response.data.errors;
                 });
-        },
+        }
     },
-    filters: {},
+    filters: {
+        rota(url) {
+            return "http://localhost:8000/" + url;
+         
+        },
+
+        image(products) {
+            
+   
+   
+        
+        }
+    }
 };
 </script>
+
+<style scoped>
+.img-product {
+    width: 75px;
+    height: 75px;
+    max-width: 100%;
+}
+</style>

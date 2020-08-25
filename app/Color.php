@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Color extends Model
 {
+    protected $casts = [
+        'catalog' => 'array',
+    ];
+
     protected $fillable = [
-        'name', 'catolog',
+        'name', 'catalog',
     ];
 }

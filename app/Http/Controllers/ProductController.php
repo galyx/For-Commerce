@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\ProductToCategory;
+use App\ProductToImage;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($product_id = null)
+    
+    private $product;
+
+    public function __construct(Product $product)
     {
-        //
+        $this->product = $product;
+    }
+
+    public function index()
+    {
+     
+        $products = $this->product->with(['categories', 'images'])->paginate(5);
+        return response()->json($products);
     }
 
     /**
@@ -26,15 +32,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
-        $save = Product::create([
+        $product = Product::create([
             'codigo' => $request->codigo,
             'product_name' => $request->product_name,
             'short_description' => $request->short_description,
             'colors' => $request->colors,
-            'group' => $request->group,
+            'family' => $request->family['id'],
             'type_sale' => $request->type_sale,
             'price' => $request->price,
+            'brand' => $request->brand['id'],
             'width' => $request->width,
             'height' => $request->height,
             'diameter' => $request->diameter,
@@ -42,20 +48,25 @@ class ProductController extends Controller
             'free_shipping' => $request->free_shipping,
             'description' => $request->description,
             'status' => $request->status,
-            'mainCategories' => $request->mainCategories,
-            'weight' => $request->weight,
-            'categories' => $request->categories,
-            'images' => $request->images,
-            'disabled' => $request->disabled,
-             
         ]);
 
-        // $categories = ProductToCategory::create([
-        //     'categorie_id' => $request->categorie_id,
-        //     'product_id' => $save->id,
-        // ]);
+        if($product){
+            foreach($request->mainCategories as $categories){
+                ProductToCategory::create([
+                    'categorie_id' => $categories['id'],
+                    'product_id' => $product->id,
+                ]);
+            }
 
-        return $save;
+            foreach($request->mainImages as $images){
+                ProductToImage::create([
+                    'image_id' => $images['id'],
+                    'product_id' => $product->id,
+                ]);
+            }
+        }
+
+        return response()->json(['status' => 200], 200);
     }
 
     /**
@@ -80,4 +91,6 @@ class ProductController extends Controller
     {
         //
     }
+
+
 }
