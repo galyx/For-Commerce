@@ -13,7 +13,7 @@ use HelperClass;
 
 class SiteController extends Controller
 {
-    // Home
+
     public function index()
     {
         return view('site.index');

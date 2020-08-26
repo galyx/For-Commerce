@@ -39,7 +39,8 @@ Vue.component('verte', Verte);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+//site
+Vue.component("product-list", require("./components/site/ProductList.vue").default);
 // Admins
 Vue.component('admin-component', require('./components/Admin.vue').default);
 // Perfil do Admin

@@ -36,76 +36,7 @@
     {{-- Corpo --}}
     <section class="container">
         {{-- Primeiro --}}
-        <div class="row mt-5">
-            <div class="col-12 col-lg-6 my-auto">
-                <div class="row">
-                    <div class="col-12"><img class="img-fluid" src="{{asset('img/logo3.png')}}" alt="Logo de produtos"></div>
-
-                    <div class="col-6 d-flex flex-column produto-info-1">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center my-2"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center my-2"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-
-                    <div class="col-6 d-flex flex-column produto-info-1">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center my-2"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center my-2"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-lg-6">
-                <div class="row">
-                    <div class="col-4 d-flex flex-column produto-info-2">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                    <div class="col-4 d-flex flex-column produto-info-2">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                    <div class="col-4 d-flex flex-column produto-info-2">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                    <div class="col-4 d-flex flex-column produto-info-2">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                    <div class="col-4 d-flex flex-column produto-info-2">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                    <div class="col-4 d-flex flex-column produto-info-2">
-                        <div><img class="img-fluid" src="{{asset('img/produto.jpg')}}" alt="Produto"></div>
-                        <div class="text-center"><span class="texto">Modelo 01 - Pequena descrição do produto.</span></div>
-                        <div class="text-center"><span class="preco">R$ 2700,00</span></div>
-                        <div class="text-center"><span class="texto">R$ 2700,00 a vista ou 10x de R$ 270,00</span></div>
-                        <div class="mt-auto detalhe"><a class="btn btn-block btn-default mb-3" href="{{url('produto/produto')}}">VER PRODUTO</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <product-list></product-list>
 
         {{-- Segundo --}}
         <div class="row mt-5">

@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('teste', 'ProductController@teste');
 Auth::routes(['verify' => true]);
 
+Route::get('products/list', 'FrontController@products');
+Route::get('products/list/2', 'FrontController@products2');
+
+
 Route::get('/', 'SiteController@index');
 Route::get('produto/{slug}', 'SiteController@produto');
 Route::get('categoria/{slug}', 'SiteController@categoria');
