@@ -44,10 +44,10 @@
                                 <div class="card-titulo">
                                     <span>{{ image.extension }}</span>
                                     <span>{{ image.size }}</span>
-                                    <!-- <span
+                                    <span
                                         >{{ image.wxh[0] }} x
                                         {{ image.wxh[1] }}</span
-                                    > -->
+                                    >
                                 </div>
                             </div>
                         </div>

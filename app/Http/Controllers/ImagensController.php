@@ -18,7 +18,7 @@ class ImagensController extends Controller
                 'id' => $image->id,
                 'image_name' => $image->image_name,
                 'path' => asset($image->path),
-                // 'wxh' => getimagesize(asset($image->path)),
+                'wxh' => getimagesize(asset($image->path)),
                 'size' => ImagensController::bytesToHuman(Storage::disk('upload')->size($image->path)),
                 'extension' => pathinfo($image->path, PATHINFO_EXTENSION),
             ];

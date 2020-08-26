@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    
     private $product;
 
     public function __construct(Product $product)
@@ -45,7 +44,7 @@ class ProductController extends Controller
             'height' => $request->height,
             'diameter' => $request->diameter,
             'weight' => $request->weight,
-            'free_shipping' => $request->free_shipping,
+            'free_shipping' => $request->free_shipping ? $request->free_shipping : 0,
             'description' => $request->description,
             'status' => $request->status,
         ]);
@@ -91,6 +90,4 @@ class ProductController extends Controller
     {
         //
     }
-
-
 }

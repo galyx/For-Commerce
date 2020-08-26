@@ -485,11 +485,11 @@
                                                     <span>{{
                                                         image.size
                                                     }}</span>
-                                                    <!-- <span
+                                                    <span
                                                         >{{ image.wxh[0] }}
                                                         x
                                                         {{ image.wxh[1] }}</span
-                                                    > -->
+                                                    >
                                                 </div>
                                             </div>
 
@@ -552,13 +552,13 @@
                                                     <span>{{
                                                         mainImage.size
                                                     }}</span>
-                                                    <!-- <span
+                                                    <span
                                                         >{{ mainImage.wxh[0] }}
                                                         x
                                                         {{
                                                             mainImage.wxh[1]
                                                         }}</span
-                                                    > -->
+                                                    >
                                                 </div>
                                             </div>
 
@@ -622,7 +622,7 @@ export default {
             height: "",
             diameter: "",
             weight: "",
-            free_shipping: false,
+            free_shipping: 0,
             description: "",
             status: false,
             mainCategories: [],
@@ -809,8 +809,8 @@ export default {
     },
     filters: {
         rota(url) {
-            return "http://localhost:8000/" + url;
-         
+            // return "http://localhost:8000/" + url;
+            return "http://localhost/For-Commerce/public/" + url;
         },
     }
 };
