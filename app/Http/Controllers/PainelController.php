@@ -43,6 +43,12 @@ class PainelController extends Controller
         return view('painel.catalogos.tags.familia');
     }
 
+    // Suporte
+    public function clientes()
+    {
+        return view('painel.clientes.clientes');
+    }
+
     // Administrador
     public function perfil()
     {

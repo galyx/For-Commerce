@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+| Rotas de clientes adiiconadas
 */
 Route::get('teste', 'ProductController@teste');
 Auth::routes(['verify' => true]);
@@ -111,6 +112,13 @@ Route::prefix('admin')->group(function () {
             Route::get('familyDestroy/{id}', 'TagsController@familyDestroy');
             Route::post('familyUpdate', 'TagsController@familyUpdate');
         });
+    });
+
+    // Clientes
+    Route:: prefix('clientes')->group(function(){
+        Route::get('clientes', 'PainelController@clientes');
+
+        Route::get('clienteIndex', 'CustomerController@clienteIndex');
     });
 
     // Admins Edits

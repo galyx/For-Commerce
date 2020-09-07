@@ -8,6 +8,7 @@
                     class="btn btn-primary"
                     data-toggle="modal"
                     data-target="#modalProducts"
+                    v-on:click="(type_save = 'SALVAR'), saveProduct()"
                 >
                     <i class="fa fa-plus"></i> Novo Produto
                 </button>
@@ -36,7 +37,15 @@
                                             :key="product.id"
                                         >
                                             <td>{{ product.codigo }}</td>
-                                            <td><img :src="product.images[0].path | rota" class="img-product"></td>
+                                            <td>
+                                                <img
+                                                    :src="
+                                                        product.images[0].path
+                                                            | rota
+                                                    "
+                                                    class="img-product"
+                                                />
+                                            </td>
                                             <td>{{ product.product_name }}</td>
                                             <td>
                                                 {{
@@ -59,10 +68,14 @@
                                                         data-tooltip="tooltip"
                                                         data-placement="top"
                                                         title="Editar Produto"
+                                                        data-toggle="modal"
+                                                        data-target="#modalProducts"
                                                         v-on:click="
-                                                            modalAdminEdit(
-                                                                output
-                                                            )
+                                                            (type_save =
+                                                                'ATUALIZAR'),
+                                                                saveProduct(
+                                                                    product
+                                                                )
                                                         "
                                                     >
                                                         <i
@@ -74,11 +87,11 @@
                                                         type="button"
                                                         class="btn btn-danger"
                                                         v-on:click="
-                                                            destroy(output)
+                                                            destroy(product)
                                                         "
                                                         data-tooltip="tooltip"
                                                         data-placement="top"
-                                                        title="Deletar Administrador"
+                                                        title="Deletar Produto"
                                                     >
                                                         <i
                                                             class="fa fa-trash"
@@ -126,15 +139,21 @@
                         </button>
                     </div>
 
-                    <div class="modal-body">
-                        <form @submit="addProduct" method="post">
+                    <form @submit="addProduct" method="post">
+                        <div class="modal-body">
+
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <input
                                         type="text"
                                         class="form-control"
                                         placeholder="Codigo do Produto"
+                                        @input="codigo = formatNumber(codigo)"
+                                        maxlength="8"
                                         v-model="codigo"
+                                        v-bind:class="{
+                                            'is-invalid': errors.codigo
+                                        }"
                                     />
                                 </div>
                                 <div class="form-group col-8">
@@ -143,6 +162,9 @@
                                         class="form-control"
                                         placeholder="Nome do Produto"
                                         v-model="product_name"
+                                        v-bind:class="{
+                                            'is-invalid': errors.product_name
+                                        }"
                                     />
                                 </div>
 
@@ -152,6 +174,10 @@
                                         class="form-control"
                                         placeholder="Pequena Discrição do Produto"
                                         v-model="short_description"
+                                        v-bind:class="{
+                                            'is-invalid':
+                                                errors.short_description
+                                        }"
                                     />
                                 </div>
                                 <div class="form-group col-12 col-md-3">
@@ -164,6 +190,10 @@
                                             aria-haspopup="true"
                                             aria-expanded="false"
                                             style="width: 100%;"
+                                            v-bind:class="{
+                                                'border-danger text-danger':
+                                                    errors.type_sale
+                                            }"
                                         >
                                             -
                                             <span v-if="type_sale == 'PC'"
@@ -217,6 +247,10 @@
                                             aria-haspopup="true"
                                             aria-expanded="false"
                                             style="width: 100%;"
+                                            v-bind:class="{
+                                                'border-danger text-danger':
+                                                    errors.brand
+                                            }"
                                         >
                                             -
                                             <span v-if="brand">{{
@@ -254,6 +288,10 @@
                                             aria-haspopup="true"
                                             aria-expanded="false"
                                             style="width: 100%;"
+                                            v-bind:class="{
+                                                'border-danger text-danger':
+                                                    errors.family
+                                            }"
                                         >
                                             -
                                             <span v-if="family">{{
@@ -323,7 +361,11 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="Preço"
+                                        @input="price = formatReal(price)"
                                         v-model="price"
+                                        v-bind:class="{
+                                            'is-invalid': errors.price
+                                        }"
                                     />
                                 </div>
 
@@ -332,7 +374,12 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="Largura"
+                                        @input="width = formatNumber(width)"
+                                        maxlength="3"
                                         v-model="width"
+                                        v-bind:class="{
+                                            'is-invalid': errors.width
+                                        }"
                                     />
                                 </div>
                                 <div class="form-group col-6 col-md-2">
@@ -340,7 +387,12 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="Altura"
+                                        @input="height = formatNumber(height)"
+                                        maxlength="3"
                                         v-model="height"
+                                        v-bind:class="{
+                                            'is-invalid': errors.height
+                                        }"
                                     />
                                 </div>
                                 <div class="form-group col-6 col-md-2">
@@ -348,7 +400,14 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="Diametro"
+                                        @input="
+                                            diameter = formatNumber(diameter)
+                                        "
+                                        maxlength="3"
                                         v-model="diameter"
+                                        v-bind:class="{
+                                            'is-invalid': errors.diameter
+                                        }"
                                     />
                                 </div>
                                 <div class="form-group col-6 col-md-2">
@@ -356,7 +415,11 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="Peso"
+                                        @input="weight = formatNumber(weight)"
                                         v-model="weight"
+                                        v-bind:class="{
+                                            'is-invalid': errors.weight
+                                        }"
                                     />
                                 </div>
                                 <div class="form-group col-12 col-md-4">
@@ -413,7 +476,13 @@
                                 </div>
                                 <div class="form-group col-12 col-lg-6">
                                     <h4>Categorias Adicionadas</h4>
-                                    <div class="categorie-box">
+                                    <div
+                                        class="categorie-box"
+                                        v-bind:class="{
+                                            'border border-danger':
+                                                errors.mainCategories
+                                        }"
+                                    >
                                         <div
                                             class="categorie-label d-flex justify-content-between"
                                             v-for="mainCategorie in mainCategories"
@@ -510,7 +579,13 @@
                                 </div>
                                 <div class="form-group col-12 col-lg-6">
                                     <h4>Imagens Adicionadas</h4>
-                                    <div class="image-box">
+                                    <div
+                                        class="image-box"
+                                        v-bind:class="{
+                                            'border border-danger':
+                                                errors.mainCategories
+                                        }"
+                                    >
                                         <div
                                             class="image-label d-flex justify-content-between"
                                             v-for="mainImage in mainImages"
@@ -594,11 +669,12 @@
                                     :disabled="disabled == 1"
                                 >
                                     <span class="fa fa-save"></span>
-                                    Registrar Produto
+                                    <span v-if="type_save == 'SALVAR'">Registrar Produto</span>
+                                    <span v-if="type_save == 'ATUALIZAR'">Atualizar Produto</span>
                                 </button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -610,6 +686,7 @@ export default {
     mounted() {},
     data() {
         return {
+            id_product: "",
             codigo: "",
             product_name: "",
             short_description: "",
@@ -635,11 +712,11 @@ export default {
             errors: {},
             disabled: 0,
             products: [],
-            pages: {}
+            pages: {},
+            type_save: ""
         };
     },
     created() {
-        var teste = "teste";
         this.getResultCategories();
         this.getImages();
         this.getBrands();
@@ -648,6 +725,17 @@ export default {
         this.getProducts();
     },
     methods: {
+        formatReal(value) {
+            var v = value + "";
+            v = v.replace(/\D/g, "");
+            v = v.replace(/(\d{2})$/g, ",$1");
+            return v;
+        },
+        formatNumber(value) {
+            var v = value + "";
+            v = v.replace(/\D/g, "");
+            return v;
+        },
         getProducts(page) {
             if (typeof page === "undefined") {
                 page = 1;
@@ -736,10 +824,16 @@ export default {
                     this.$swal.showLoading();
                 }
             });
-
+            if(this.type_save == 'SALVAR'){
+                var url_save = "productStore";
+            }
+            if(this.type_save == 'ATUALIZAR'){
+                var url_save = "productUpdate";
+            }
             // Conexão
             axios
-                .post("productStore", {
+                .post(url_save, {
+                    id_product: this.id_product,
                     codigo: this.codigo,
                     product_name: this.product_name,
                     short_description: this.short_description,
@@ -805,13 +899,119 @@ export default {
                     this.disabled = 0;
                     this.errors = error.response.data.errors;
                 });
+        },
+        destroy(e) {
+            this.$swal({
+                title: "Você tem Certeza?",
+                html:
+                    "Você irá deletar o <strong>" +
+                    e.product_name +
+                    "</strong> permanentemente!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sim, Delete isso!",
+                cancelButtonText: "Não, Mantê-la"
+            }).then(result => {
+                if (result.value) {
+                    axios.get("productDestroy/" + e.id).then(response => {
+                        this.getProducts();
+                        this.$swal({
+                            title: "Deletado!",
+                            html:
+                                "<strong>" +
+                                e.product_name +
+                                "</strong> Deletado com sucesso.",
+                            icon: "success"
+                        });
+                    });
+                }
+            });
+        },
+        saveProduct(e) {
+            this.getResultCategories();
+            this.getBrands();
+            this.getFamilies();
+            // this.getCatalogs();
+
+            if (this.type_save == "ATUALIZAR") {
+                this.id_product = e.id;
+                this.codigo = e.codigo;
+                this.product_name = e.product_name;
+                this.short_description = e.short_description;
+                // this.colors             = this.catalogs.find(item => item.id > e.colors);
+                this.family = this.families.find(item => item.id == e.family);
+                this.type_sale = e.type_sale;
+                this.price = e.price.replace(".", ",");
+                this.brand = this.brands.find(item => item.id == e.brand);
+                this.width = e.width;
+                this.height = e.height;
+                this.diameter = e.diameter;
+                this.weight = e.weight;
+                this.free_shipping = e.free_shipping == 0 ? 0 : 1;
+                this.description = e.description;
+                this.mainCategories = e.categories;
+
+                // Fazemos ua noca leitura das imagens e depois filtramos elas
+                axios
+                    .get("../imageIndex")
+                    .then(result => {
+                        this.images = result.data;
+                        this.mainImages = [];
+                    })
+                    .then(result => {
+                        e.images.forEach(value => {
+                            this.mainImages.push(
+                                this.images.find(item => item.id == value.id)
+                            );
+                            this.images.splice(
+                                this.images.indexOf(
+                                    this.images.find(
+                                        item => item.id == value.id
+                                    )
+                                ),
+                                1
+                            );
+                        });
+                    });
+
+                // Criar uma variavel em branco para categorias
+                var getCategorie = "";
+                // Lendo as categorias e por bug salvar o ultimo
+                e.categories.forEach(value => {
+                    getCategorie = value;
+                });
+                // Pegando o resultado sistema
+                this.getResultCategories(getCategorie);
+            }
+
+            if(this.type_save == "SALVAR"){
+                this.getImages();
+
+                this.id_product = "";
+                this.codigo = "";
+                this.product_name = "";
+                this.short_description = "";
+                // this.colors             = null;
+                this.family = "";
+                this.type_sale = "";
+                this.price = "";
+                this.brand = "";
+                this.width = "";
+                this.height = "";
+                this.diameter = "";
+                this.weight = ""
+                this.free_shipping = 0;
+                this.description = "";
+                this.mainCategories = [];
+                this.mainImages = [];
+            }
         }
     },
     filters: {
         rota(url) {
             // return "http://localhost:8000/" + url;
             return "http://localhost/For-Commerce/public/" + url;
-        },
+        }
     }
 };
 </script>

@@ -13,13 +13,6 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import VueFileAgent from 'vue-file-agent';
 import VueEditor from "vue2-editor";
 
-Vue.filter('formatDate', function(value) {
-    if (value) {
-        // return moment(String(value)).format('MM/DD/YYYY hh:mm')
-        return moment(String(value)).format('DD/MM/YYYY')
-    }
-});
-
 Vue.use(require('vue-resource'));
 Vue.use(VueSweetalert2);
 Vue.use(VueFileAgent);
@@ -28,6 +21,14 @@ Vue.use(VueEditor);
 import Verte from 'verte';
 import 'verte/dist/verte.css';
 Vue.component('verte', Verte);
+
+// Filtro de data global
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        // return moment(String(value)).format('MM/DD/YYYY hh:mm')
+        return moment(String(value)).format('DD/MM/YYYY')
+    }
+});
 
 /**
  * The following block of code may be used to automatically register your
@@ -60,6 +61,10 @@ Vue.component('cores-component', require('./components/catalogos/tags/Colors.vue
 Vue.component('marcas-component', require('./components/catalogos/tags/Brand.vue').default);
 // Familia dos Produtos
 Vue.component('familia-component', require('./components/catalogos/tags/Family.vue').default);
+
+// Clientes
+// Clientes
+Vue.component('clientes-component', require('./components/clientes/Clientes.vue').default);
 
 //calculadora
 Vue.component('calculadora-component', require('./components/calculadora.vue').default);

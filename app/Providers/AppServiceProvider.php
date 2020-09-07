@@ -59,11 +59,11 @@ class AppServiceProvider extends ServiceProvider
                                 'text'    => 'Tags',
                                 'icon'    => 'fas fa-fw fa-tags',
                                 'submenu' => [
-                                    [
-                                        'text' => 'Catalogos de Cores',
-                                        'url'  => 'admin/catalogos/tags/cores',
-                                        'icon' => 'fas fa-fw fa-angle-right',
-                                    ],
+                                    // [
+                                    //     'text' => 'Catalogos de Cores',
+                                    //     'url'  => 'admin/catalogos/tags/cores',
+                                    //     'icon' => 'fas fa-fw fa-angle-right',
+                                    // ],
                                     [
                                         'text' => 'Marcas dos Produtos',
                                         'url'  => 'admin/catalogos/tags/marcas',
@@ -81,26 +81,21 @@ class AppServiceProvider extends ServiceProvider
                 );
             }
             // Suporte
-            // if($authVerify == 2 || $authVerify == 10){
-            //     $event->menu->add(
-            //         [
-            //             'text'    => 'Clientes',
-            //             'icon'    => 'fas fa-fw fa-users',
-            //             'submenu' => [
-            //                 [
-            //                     'text' => 'Clientes',
-            //                     'url'  => 'admin/clientes/clientes',
-            //                     'icon' => 'fas fa-fw fa-angle-right'
-            //                 ],
-            //                 [
-            //                     'text' => 'Endereços',
-            //                     'url'  => 'admin/clientes/enderecos',
-            //                     'icon' => 'fas fa-fw fa-angle-right'
-            //                 ],
-            //             ],
-            //         ],
-            //     );
-            // }
+            if($authVerify == 2 || $authVerify == 10){
+                $event->menu->add(
+                    [
+                        'text'    => 'Clientes',
+                        'icon'    => 'fas fa-fw fa-users',
+                        'submenu' => [
+                            [
+                                'text' => 'Clientes',
+                                'url'  => 'admin/clientes/clientes',
+                                'icon' => 'fas fa-fw fa-angle-right'
+                            ],
+                        ],
+                    ],
+                );
+            }
             // Administrador
             if($authVerify == 10){
                 $event->menu->add(
