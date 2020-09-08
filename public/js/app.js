@@ -5680,13 +5680,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
     return {
       outputs: "",
+      outputs2: {},
       addresses: "",
-      pages: {}
+      pages: {},
+      searchIn: ""
     };
   },
   created: function created() {
@@ -5703,14 +5739,31 @@ __webpack_require__.r(__webpack_exports__);
       this.$http.get("clienteIndex?page=" + page).then(function (response) {
         return response.json();
       }).then(function (data) {
-        // Paginas do admin
+        // Paginas
         _this.pages = data; // Separado por pagina
 
-        _this.outputs = data.data;
+        _this.outputs = data.data; // Total de busca por filtro
+
+        _this.outputs2 = data.data;
         $(function () {
           $('[data-tooltip="tooltip"]').tooltip();
         });
       });
+    },
+    search: function search() {
+      var _this2 = this;
+
+      if (this.searchIn) {
+        this.outputs = this.outputs2.filter(function (item) {
+          if (item.cpf !== null) {
+            return item.name.toLowerCase().startsWith(_this2.searchIn.toLowerCase()) || item.email.toLowerCase().startsWith(_this2.searchIn.toLowerCase()) || item.cpf.replaceAll(/[\.\-]/g, '').startsWith(_this2.searchIn.replaceAll(/[\.\-]/g, ''));
+          } else {
+            return item.name.toLowerCase().startsWith(_this2.searchIn.toLowerCase()) || item.email.toLowerCase().startsWith(_this2.searchIn.toLowerCase());
+          }
+        });
+      } else {
+        this.getCustomers();
+      }
     },
     modalAdress: function modalAdress(output) {
       $("#modalAdress").modal("show");
@@ -94134,7 +94187,39 @@ var render = function() {
     "div",
     { staticClass: "card" },
     [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "row justify-content-between" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchIn,
+                  expression: "searchIn"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "search",
+                placeholder: "Busca por Nome, Email ou CPF"
+              },
+              domProps: { value: _vm.searchIn },
+              on: {
+                keyup: _vm.search,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchIn = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "table-responsive" }, [
@@ -94207,10 +94292,12 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("pagination", {
-        attrs: { data: _vm.pages },
-        on: { "pagination-change-page": _vm.getCustomers }
-      }),
+      !_vm.searchIn
+        ? _c("pagination", {
+            attrs: { data: _vm.pages },
+            on: { "pagination-change-page": _vm.getCustomers }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "div",
@@ -94247,33 +94334,46 @@ var render = function() {
                           { staticClass: "list-group list-group-flush" },
                           [
                             _c("li", { staticClass: "list-group-item" }, [
-                              _vm._v("Cep: " + _vm._s(address.cep))
+                              _vm._v(
+                                "\n                                Cep: " +
+                                  _vm._s(address.cep) +
+                                  "\n                            "
+                              )
                             ]),
                             _vm._v(" "),
                             _c("li", { staticClass: "list-group-item" }, [
                               _vm._v(
-                                "Cidade: " +
+                                "\n                                Cidade: " +
                                   _vm._s(address.cidade) +
-                                  " - UF: " +
-                                  _vm._s(address.uf)
+                                  " - UF:\n                                " +
+                                  _vm._s(address.uf) +
+                                  "\n                            "
                               )
                             ]),
                             _vm._v(" "),
                             _c("li", { staticClass: "list-group-item" }, [
-                              _vm._v("Bairro: " + _vm._s(address.bairro))
+                              _vm._v(
+                                "\n                                Bairro: " +
+                                  _vm._s(address.bairro) +
+                                  "\n                            "
+                              )
                             ]),
                             _vm._v(" "),
                             _c("li", { staticClass: "list-group-item" }, [
                               _vm._v(
-                                _vm._s(address.rua) +
+                                "\n                                " +
+                                  _vm._s(address.rua) +
                                   " - Nº " +
-                                  _vm._s(address.numero)
+                                  _vm._s(address.numero) +
+                                  "\n                            "
                               )
                             ]),
                             _vm._v(" "),
                             _c("li", { staticClass: "list-group-item" }, [
                               _vm._v(
-                                "Complemento: " + _vm._s(address.complemento)
+                                "\n                                Complemento: " +
+                                  _vm._s(address.complemento) +
+                                  "\n                            "
                               )
                             ])
                           ]
@@ -94299,7 +94399,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
+    return _c("div", { staticClass: "col-4" }, [
       _c("h3", { staticClass: "card-title" }, [_vm._v("Dados dos clientes")])
     ])
   },

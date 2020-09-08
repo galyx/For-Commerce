@@ -1,7 +1,21 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Dados dos clientes</h3>
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <h3 class="card-title">Dados dos clientes</h3>
+                </div>
+
+                <div class="form-group col-4">
+                    <input
+                        type="search"
+                        class="form-control"
+                        v-model="searchIn"
+                        v-on:keyup="search"
+                        placeholder="Busca por Nome, Email ou CPF"
+                    />
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -54,6 +68,7 @@
         </div>
 
         <pagination
+            v-if="!searchIn"
             :data="pages"
             @pagination-change-page="getCustomers"
         ></pagination>
@@ -83,20 +98,39 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="col-12" v-for="address in addresses" :key="address.id">
+                        <div
+                            class="col-12"
+                            v-for="address in addresses"
+                            :key="address.id"
+                        >
                             <h3 class="mb-3">Endereço</h3>
 
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Cep: {{address.cep}}</li>
-                                <li class="list-group-item">Cidade: {{address.cidade}} - UF: {{address.uf}}</li>
-                                <li class="list-group-item">Bairro: {{address.bairro}}</li>
-                                <li class="list-group-item">{{address.rua}} - Nº {{address.numero}}</li>
-                                <li class="list-group-item">Complemento: {{address.complemento}}</li>
+                                <li class="list-group-item">
+                                    Cep: {{ address.cep }}
+                                </li>
+                                <li class="list-group-item">
+                                    Cidade: {{ address.cidade }} - UF:
+                                    {{ address.uf }}
+                                </li>
+                                <li class="list-group-item">
+                                    Bairro: {{ address.bairro }}
+                                </li>
+                                <li class="list-group-item">
+                                    {{ address.rua }} - Nº {{ address.numero }}
+                                </li>
+                                <li class="list-group-item">
+                                    Complemento: {{ address.complemento }}
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
                             Fechar
                         </button>
                     </div>
@@ -112,8 +146,10 @@ export default {
     data() {
         return {
             outputs: "",
+            outputs2: {},
             addresses: "",
-            pages: {}
+            pages: {},
+            searchIn: ""
         };
     },
     created() {
@@ -130,15 +166,46 @@ export default {
                     return response.json();
                 })
                 .then(data => {
-                    // Paginas do admin
+                    // Paginas
                     this.pages = data;
                     // Separado por pagina
                     this.outputs = data.data;
+                    // Total de busca por filtro
+                    this.outputs2 = data.data;
 
                     $(function() {
                         $('[data-tooltip="tooltip"]').tooltip();
                     });
                 });
+        },
+        search() {
+            if (this.searchIn) {
+                this.outputs = this.outputs2.filter(item => {
+                    if(item.cpf !== null){
+                        return (
+                            item.name
+                                .toLowerCase()
+                                .startsWith(this.searchIn.toLowerCase()) ||
+                            item.email
+                                .toLowerCase()
+                                .startsWith(this.searchIn.toLowerCase()) ||
+                            item.cpf.replaceAll(/[\.\-]/g,'').startsWith(this.searchIn.replaceAll(/[\.\-]/g,''))
+                        );
+                    }else{
+                        return (
+                            item.name
+                                .toLowerCase()
+                                .startsWith(this.searchIn.toLowerCase()) ||
+                            item.email
+                                .toLowerCase()
+                                .startsWith(this.searchIn.toLowerCase())
+                        );
+                    }
+                    
+                });
+            } else {
+                this.getCustomers();
+            }
         },
         modalAdress(output) {
             $("#modalAdress").modal("show");
